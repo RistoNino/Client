@@ -1,0 +1,18 @@
+input {
+    -fx-background-color: #292929;
+    -fx-border-color: #3e3e3e;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 8px;
+    -fx-color: #fff;
+    -fx-padding: 14px 24px;
+    -fx-text-decoration: none;
+    -fx-font-size: 16px;
+    -fx-margin: 12px 14px;
+}
+
+input:hover {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: #fff;
+}

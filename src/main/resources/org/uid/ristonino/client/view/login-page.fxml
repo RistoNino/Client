@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.layout.VBox?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.client.controller.LoginPageController">
+        <VBox styleClass="root">
+            <Label text="CIAO"/>
+            <Label text="Interfaccia Cliente"/>
+            <Button text="Premimi :3" fx:id="Pulsante" onAction="#cambiaTesto"/>
+            <Label fx:id="prova" text="Sono da cambiare - Test"/>
+        </VBox>
+
+</AnchorPane>
