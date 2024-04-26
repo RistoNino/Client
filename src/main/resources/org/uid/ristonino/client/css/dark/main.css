@@ -5,3 +5,23 @@
 .root * {
     -fx-text-fill: #ffffff;
 }
+
+#sidebar {
+    -fx-background-color: #434242;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.sidebar Button {
+    -fx-background-color: #302c2c;
+    -fx-padding: 16px;
+    -fx-min-width: 300px;
+    -fx-max-width: 300px;
+}
+
+.activeSidebar {
+    -fx-background-color: orange;
+}
+
+

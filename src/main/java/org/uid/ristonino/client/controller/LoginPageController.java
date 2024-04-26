@@ -25,4 +25,10 @@ public class LoginPageController {
             this.isDarkMode = true;
         }
     }
+
+    @FXML
+    private void vaiHome() {
+        SceneHandler.getInstance().changeTheme("dark");
+        SceneHandler.getInstance().createHomeScene();
+    }
 }

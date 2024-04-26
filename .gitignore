@@ -9,4 +9,4 @@
 *.iml
 out
 gen
-.target
+target

@@ -12,6 +12,7 @@
             <Label text="Interfaccia Cliente"/>
             <Button text="Premimi :3" fx:id="Pulsante" onAction="#cambiaTesto"/>
             <Label fx:id="prova" text="Sono da cambiare - Test"/>
+            <Button text="Vai alla Home" onAction="#vaiHome"/>
         </VBox>
 
 </AnchorPane>
