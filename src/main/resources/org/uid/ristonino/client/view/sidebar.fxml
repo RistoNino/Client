@@ -7,8 +7,5 @@
       fx:controller="org.uid.ristonino.client.controller.SidebarController"
 prefWidth="300" styleClass="sidebar">
     <Button text="Home" fx:id="home" onAction="#vaiHome"/>
-    <Button text="Antipasti" fx:id="antipasti" onAction="#vaiAntipasti"/>
-    <Button text="Primi" fx:id="primi" onAction="#vaiPrimi"/>
-    <Button text="Secondi" fx:id="secondi" onAction="#vaiSecondi"/>
     <!-- Aggiungi altri pulsanti per le varie sezioni -->
 </VBox>

@@ -11,9 +11,13 @@
         <fx:include source="sidebar.fxml"/>
     </left>
     <center>
-        <Label text="HOME DEL CLIENTE"/>
+        <ListView fx:id="itemsList">
+            <Label text="HOME DEL CLIENTE"/>
+        </ListView>
     </center>
     <right>
+        <Label text="Riepilogo"/>
+
 
     </right>
 </BorderPane>

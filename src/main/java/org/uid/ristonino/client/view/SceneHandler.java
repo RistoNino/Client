@@ -8,15 +8,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 import org.uid.ristonino.client.model.Debug;
+import org.uid.ristonino.client.model.Settings;
 
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
 
     // Path
-    private final static String SCENE_PATH = "/org/uid/ristonino/client/";
-    private final static String CSS_PATH = SCENE_PATH + "css/";
-    private final static String VIEW_PATH = SCENE_PATH + "view/";
+    private final static String CSS_PATH = Settings.SCENE_PATH + "css/";
+    private final static String VIEW_PATH = Settings.SCENE_PATH + "view/";
 
     // Risoluzione
     private final static double minWidth = 1200;
@@ -53,8 +53,12 @@ public class SceneHandler {
     public void init(Stage stage) throws IOException {
         if (this.stage == null) {
             this.stage = stage;
-            this.stage.setWidth(Debug.width);
-            this.stage.setHeight(Debug.height);
+            if (Debug.IS_ACTIVE) {
+                this.stage.setWidth(Debug.width);
+                this.stage.setHeight(Debug.height);
+            } else {
+                this.stage.setFullScreen(true);
+            }
             this.stage.setTitle("RistoNino");
             createLoginScene();
             this.stage.setScene(scene);
@@ -84,9 +88,10 @@ public class SceneHandler {
 
     public void createHomeScene() {
         try {
-            scene.setRoot(loadRootFromFXML("home-page.fxml"));
+            scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
             setResolution();
         } catch (IOException ignored) {
+            System.out.println(ignored);
         }
     }
 
