@@ -1,7 +1,10 @@
 package org.uid.ristonino.client.controller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.events.SelectedCategory;
@@ -23,6 +26,7 @@ public class SidebarController {
 
     @FXML
     private void initialize() {
+        sidebar.setAlignment(Pos.TOP_CENTER);
         home.getStyleClass().add("activeSidebar");
         sidebarButtons.add(home);
         for (String category : Debug.categoryList) {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.client.controller.MenuController"
+            prefHeight="400.0" prefWidth="600.0" fx:id="container">
+    <left>
+        <fx:include source="sidebar.fxml"/>
+    </left>
+    <center>
+        <ScrollPane fx:id="itemsListContainer" fitToWidth="true" hbarPolicy="NEVER">
+            <VBox fx:id="itemsList" maxWidth="Infinity" alignment="TOP_CENTER">
+
+            </VBox>
+        </ScrollPane>
+    </center>
+    <right>
+        <VBox styleClass="rightSide" alignment="TOP_CENTER">
+            <ScrollPane fx:id="ordersListContainer" fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
+                <VBox fx:id="ordersList" maxHeight="Infinity" maxWidth="Infinity" alignment="TOP_CENTER">
+                    <Label text="ANNAMo"/>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+        <VBox styleClass="rightSide" alignment="BOTTOM_CENTER">
+            <fx:include source="cart.fxml"/>
+        </VBox>
+    </right>
+</BorderPane>

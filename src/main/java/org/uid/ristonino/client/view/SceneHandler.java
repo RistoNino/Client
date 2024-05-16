@@ -88,7 +88,7 @@ public class SceneHandler {
 
     public void createHomeScene() {
         try {
-            scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
+            scene.setRoot(loadRootFromFXML(VIEW_PATH + "menu-page.fxml"));
             setResolution();
         } catch (IOException ignored) {
             System.out.println(ignored);

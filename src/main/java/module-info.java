@@ -3,6 +3,7 @@ module org.uid.ristonino.client {
     requires javafx.fxml;
 
     requires org.kordamp.ikonli.javafx;
+    requires org.json;
 
     opens org.uid.ristonino.client to javafx.fxml;
     opens org.uid.ristonino.client.controller to javafx.fxml;

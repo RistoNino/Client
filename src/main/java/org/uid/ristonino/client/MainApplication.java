@@ -5,9 +5,21 @@ import javafx.stage.Stage;
 import org.uid.ristonino.client.view.SceneHandler;
 
 public class MainApplication extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         SceneHandler.getInstance().init(primaryStage);
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+
+    }
+
+    @Override
+    public void stop() {
+        System.exit(0);
     }
 
     public static void main(String[] args) {
