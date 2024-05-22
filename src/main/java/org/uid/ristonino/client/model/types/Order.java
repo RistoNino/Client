@@ -1,7 +1,6 @@
 package org.uid.ristonino.client.model.types;
 
 import java.util.List;
-import java.util.StringJoiner;
 
 public class Order {
     private int tableId;
