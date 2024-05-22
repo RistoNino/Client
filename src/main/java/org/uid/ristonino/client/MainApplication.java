@@ -2,6 +2,7 @@ package org.uid.ristonino.client;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.view.SceneHandler;
 
 public class MainApplication extends Application {
@@ -14,7 +15,7 @@ public class MainApplication extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-
+        ApiHandler.getInstance();
     }
 
     @Override
