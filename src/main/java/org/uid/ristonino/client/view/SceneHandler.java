@@ -2,7 +2,7 @@ package org.uid.ristonino.client.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,8 +23,14 @@ public class SceneHandler {
     private final static double minHeight = 600;
 
     private static final SceneHandler instance = new SceneHandler();
-    // Va ricordato di essere preso da file / server
-    private String theme = "dark";
+    private String theme = "light";
+
+    private final ColorAdjust protanopia = new ColorAdjust(-0.2, -0.3, 0.1, 0.0);
+    private final ColorAdjust deuteranopia = new ColorAdjust(-0.1, -0.2, 0.1, 0.0);
+    private final ColorAdjust tritanopia = new ColorAdjust(0.2, -0.3, 0.1, 0.0);
+    private final ColorAdjust normal = new ColorAdjust(0.0, 0.0, 0.0, 0.0);
+
+    private final String daltonismo = "normal";
 
     public static SceneHandler getInstance() {
         return instance;
@@ -36,6 +42,23 @@ public class SceneHandler {
     private void applyTheme() {
         this.scene.getStylesheets().clear();
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "style.css")).toExternalForm());
+
+        switch (daltonismo) {
+            case "protanopia":
+                scene.getRoot().setEffect(protanopia);
+                break;
+            case "deuteranopia":
+                scene.getRoot().setEffect(deuteranopia);
+                break;
+            case "tritanopia":
+                scene.getRoot().setEffect(tritanopia);
+                break;
+            case null, default:
+                scene.getRoot().setEffect(normal);
+                break;
+        }
+
     }
 
     public void changeTheme(String newTheme) {
@@ -91,7 +114,7 @@ public class SceneHandler {
             scene.setRoot(loadRootFromFXML(VIEW_PATH + "menu-page.fxml"));
             setResolution();
         } catch (IOException ignored) {
-            System.out.println(ignored);
+            Debug.print(ignored.toString());
         }
     }
 
@@ -107,13 +130,6 @@ public class SceneHandler {
         } finally {
             setResolution();
         }
-    }
-
-    public void createErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setContentText(message);
-        alert.show();
     }
 }
 
