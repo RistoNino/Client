@@ -6,9 +6,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.CustomItemController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Line?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.uid.ristonino.client.controller.CustomItemController"
+      fx:id="customItemContainer" visible="false">
+<ImageView/>
+    <Label textAlignment="CENTER" text="Titolo Piatto" fx:id="custonItemName"/>
+    <Label text="Descrizione piatto" fx:id="customItemDescription" />
+    <Line />
+    <Label text="INGREDIENTI" textAlignment="CENTER"/>
+    <VBox fx:id="ingredientsBox">
+        <CheckBox selected="true" textAlignment="CENTER" text="INGREDIENTE 1"/>
+        <CheckBox selected="true" textAlignment="CENTER" text="INGREDIENTE 2"/>
+        <CheckBox selected="true" textAlignment="CENTER" text="INGREDIENTE 3"/>
+    </VBox>
+    <Line />
+    <Label text="EXTRA" alignment="CENTER"/>
+    <VBox fx:id="extraIngredientsBox">
+        <CheckBox textAlignment="CENTER" text="INGREDIENTE EXTRA 1"/>
+        <CheckBox textAlignment="CENTER" text="INGREDIENTE EXTRA 2"/>
+        <CheckBox textAlignment="CENTER" text="INGREDIENTE EXTRA 3"/>
+    </VBox>
+</VBox>
