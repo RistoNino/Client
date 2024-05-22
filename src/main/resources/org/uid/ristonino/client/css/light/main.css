@@ -1,7 +1,22 @@
-.root {
-    -fx-background-color: #ffffff;
-}
+* {
+    backgroundPrimaryColor: #ffffff;
+    backgroundSecondaryColor: #fffeee;
+    backgroundTerziaryColor: #ece5e5;
 
-.root * {
-    -fx-text-fill: #212121;
+
+    activeOptionColor: #2196f3;
+    activeOptionColorHover: #409fe3;
+
+    /* BOTTONI */
+    addButtonBackground: #13bc13;
+    addButtonBackgroundHover: #05c815;
+    addButtonText: #fff;
+    removeButtonBackground: #ff0000;
+    removeButtonBackgroundHover: #ff3636;
+    removeButtonText: #fff;
+
+    buttonSizeText: 14px;
+
+    borderColor: #acacac;
+    textColor: #212121;
 }
