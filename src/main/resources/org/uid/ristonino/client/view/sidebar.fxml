@@ -7,11 +7,6 @@
 <?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:id="sidebar" spacing="15"
       fx:controller="org.uid.ristonino.client.controller.SidebarController"
-      prefWidth="300" styleClass="sidebar">
-    <Button text="Home" fx:id="home" onAction="#vaiHome">
-        <VBox.margin>
-            <Insets top="10"/>
-        </VBox.margin>
-    </Button>
+      prefWidth="200" styleClass="sidebar">
     <!-- Aggiungi altri pulsanti per le varie sezioni -->
 </VBox>
