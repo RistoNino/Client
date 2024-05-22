@@ -6,9 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.shape.Line?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.CategoryController"
-            fx:id="categoryContainer">
-    <Label text="Category" fx:id="categoryLabel" alignment="TOP_CENTER" textAlignment="CENTER"/>
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.uid.ristonino.client.controller.CategoryController"
+      fx:id="categoryContainer" spacing="15" alignment="CENTER">
+    <Label text="Category" fx:id="categoryLabel" alignment="CENTER" textAlignment="CENTER"/>
+    <Separator prefWidth="Infinity" />
 </VBox>

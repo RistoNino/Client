@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Settings;
@@ -34,6 +35,9 @@ public class CategoryController {
             MenuItemController controller = fxmlLoader.getController();
             controller.initialize(name, category, description, ingredients, price);
             categoryContainer.getChildren().add(node);
+            Separator separator = new Separator();
+            separator.setMaxWidth(Double.MAX_VALUE);
+            categoryContainer.getChildren().add(separator);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
