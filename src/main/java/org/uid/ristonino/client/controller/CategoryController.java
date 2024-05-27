@@ -23,17 +23,17 @@ public class CategoryController {
         categoryLabel.setText(category);
         for (Item item : Debug.items) {
             if (item.getCategory().equals(category)) {
-                loadItem(item.getName(), item.getCategory(), item.getDescription(), item.getIngredients(), item.getPrice());
+                loadItem(item.getId(), item.getName(), item.getDescription(), item.getIngredients(), item.getPrice());
             }
         }
     }
 
-    private void loadItem(String name, String category, String description, List<String> ingredients, Double price) {
+    private void loadItem(int id, String name, String description, List<String> ingredients, Double price) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Settings.SCENE_PATH + "view/item.fxml"));
             Node node = fxmlLoader.load();
             MenuItemController controller = fxmlLoader.getController();
-            controller.initialize(name, category, description, ingredients, price);
+            controller.initialize(id, name, description, ingredients, price);
             categoryContainer.getChildren().add(node);
             Separator separator = new Separator();
             separator.setMaxWidth(Double.MAX_VALUE);
