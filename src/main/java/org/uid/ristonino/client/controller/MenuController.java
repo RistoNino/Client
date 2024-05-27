@@ -9,14 +9,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Settings;
-import org.uid.ristonino.client.model.events.EventBus;
-import org.uid.ristonino.client.model.events.ScrolledCategory;
-import org.uid.ristonino.client.model.events.SelectedCategory;
+import org.uid.ristonino.client.model.events.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,19 +23,15 @@ public class MenuController {
     private ScrollPane itemsListContainer;
     @FXML
     private VBox itemsList;
-    @FXML
-    private StackPane containerStack;
 
     private String actualCategory;
 
     private Map<String, Node> categorie = new HashMap<>();
 
-
     // Inizializzare con lista di categorie date da apihandler/model
     @FXML
     private void initialize() {
         boolean firstCategory = true;
-        itemsList.setSpacing(10);
         for (String category : Debug.categoryList) {
             if (firstCategory) {
                 actualCategory = category;
@@ -68,8 +60,7 @@ public class MenuController {
                 actualCategory = categoria;
             }
         });
-        // Aggiungi un listener per monitorare i cambiamenti nella posizione di scorrimento verticale
-        // ChatGPT ha aiutato molto
+        // Listener per monitorare i cambiamenti nella scrollBar
         itemsListContainer.vvalueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -108,8 +99,6 @@ public class MenuController {
                 }
             }
         });
-
-        //Ascolta evento per aggiungere item alla lista ordini da fare
     }
 
 

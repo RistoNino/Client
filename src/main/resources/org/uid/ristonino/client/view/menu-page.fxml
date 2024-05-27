@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="org.uid.ristonino.client.controller.MenuController" fx:id="containerStack">
-    <BorderPane fx:id="containerBorder">
-        <left>
-            <fx:include source="sidebar.fxml"/>
-        </left>
-        <center>
-            <ScrollPane fx:id="itemsListContainer" prefHeight="Infinity" fitToWidth="true" hbarPolicy="NEVER">
-                <VBox fx:id="itemsList" maxWidth="Infinity" alignment="TOP_CENTER">
 
-                </VBox>
-            </ScrollPane>
-        </center>
-        <right>
-            <VBox styleClass="rightSide" alignment="TOP_CENTER">
-                <ScrollPane fx:id="ordersListContainer" fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
-                    <VBox fx:id="ordersList" maxHeight="Infinity" maxWidth="Infinity" alignment="TOP_CENTER">
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.client.controller.MenuController"
+            fx:id="itemsListContainer" prefHeight="Infinity" fitToWidth="true" hbarPolicy="NEVER">
+    <VBox fx:id="itemsList" maxWidth="Infinity" alignment="TOP_CENTER" spacing="10">
 
-                    </VBox>
-                </ScrollPane>
-            </VBox>
-            <VBox styleClass="rightSide" alignment="BOTTOM_CENTER">
-                <fx:include source="cart.fxml"/>
-            </VBox>
-        </right>
-    </BorderPane>
-</StackPane>
+    </VBox>
+</ScrollPane>
