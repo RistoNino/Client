@@ -2,6 +2,7 @@
     backgroundPrimaryColor: #ffffff;
     backgroundSecondaryColor: #fffeee;
     backgroundTerziaryColor: #ece5e5;
+    backgroundQuartColor: #f4f4f4;
 
 
     activeOptionColor: #2196f3;
@@ -14,8 +15,6 @@
     removeButtonBackground: #ff0000;
     removeButtonBackgroundHover: #ff3636;
     removeButtonText: #fff;
-
-    buttonSizeText: 14px;
 
     borderColor: #acacac;
     textColor: #212121;
