@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Debug {
     public final static boolean IS_ACTIVE = true;
-    public final static double height = 800;
-    public final static double width = 1200;
+    public final static double height = 900;
+    public final static double width = 1400;
 
     public final static List<String> categoryList = new ArrayList<String>(List.of("Antipasti", "Primi", "Secondi", "Dolci", "Minchiata"));
 

@@ -7,22 +7,25 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.Settings;
+import org.uid.ristonino.client.model.events.AddOrder;
+import org.uid.ristonino.client.model.events.CreateCustomItem;
+import org.uid.ristonino.client.model.events.EventBus;
+import org.uid.ristonino.client.model.types.Order;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuItemController {
-    @FXML private ImageView image;
+    @FXML private ImageView imageItem;
     @FXML private Button add;
     @FXML private Button remove;
     @FXML private Label quantity;
@@ -48,29 +51,37 @@ public class MenuItemController {
     private FadeTransition fadeOutRemove;
     private double itemPrice = 0.00;
 
+    private AddOrder addOrder;
+    private Order ordine;
+
 
     @FXML
-    public void initialize(String itemName, String category, String itemDescription, List<String> itemIngredients, Double priceItem) {
+    public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem) {
         name.setText(itemName);
         description.setText(itemDescription);
         ingredients.setText(String.join(", ", itemIngredients));
         itemPrice = priceItem;
-        price.setText(String.format("%.2f", itemPrice) + " €");
+        price.setText("€" + String.format("%.2f", itemPrice));
         itemView.setMaxHeight(60);
         addIcon.setIconColor(Color.WHITE);
         removeIcon.setIconColor(Color.WHITE);
         add.setGraphic(addIcon);
         remove.setGraphic(removeIcon);
+        Image image = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
+        imageItem.setImage(image);
+        ordine = new Order(itemName, 0, itemPrice, new ArrayList<>(), "");
+        addOrder = new AddOrder("item-" + itemId, ordine);
         doAnimation();
-        //itemView.getChildren().add(createCustomItem());
         itemView.setOnMouseClicked(event -> {
-
+            EventBus.getInstance().fireEvent(new CreateCustomItem(itemName, itemDescription, itemIngredients, priceItem));
         });
     }
 
     @FXML
     private void addItem() {
         itemQuantity++;
+        ordine.setQuantity(itemQuantity);
+        EventBus.getInstance().fireEvent(addOrder);
         quantity.setText(String.valueOf(itemQuantity) + "x");
         if (itemQuantity == 1) {
             timelineTop.play();
@@ -85,7 +96,9 @@ public class MenuItemController {
     private void removeItem() {
         if (itemQuantity > 0) {
             itemQuantity--;
+            ordine.setQuantity(itemQuantity);
         }
+        EventBus.getInstance().fireEvent(addOrder);
 
         if (itemQuantity == 0) {
             timelineCenter.play();
@@ -94,7 +107,7 @@ public class MenuItemController {
             quantity.setVisible(false);
             remove.setVisible(false);
         } else {
-            quantity.setText(String.valueOf(itemQuantity) + "x");
+            quantity.setText(itemQuantity + "x");
         }
     }
 
