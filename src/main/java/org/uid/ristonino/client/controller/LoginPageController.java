@@ -1,5 +1,6 @@
 package org.uid.ristonino.client.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ public class LoginPageController {
     @FXML Label numCoperti;
     @FXML Button buttonRemCop;
     @FXML Button buttonAddCop;
+    @FXML Button startButton;
 
     private int maxNumeroCoperti = 12;
 
@@ -52,7 +54,9 @@ public class LoginPageController {
 
     @FXML
     private void vaiHome() {
-        SceneHandler.getInstance().changeTheme("light");
+        buttonAddCop.setDisable(true);
+        buttonRemCop.setDisable(true);
+        startButton.setDisable(true);
         SceneHandler.getInstance().createHomeScene();
     }
 }
