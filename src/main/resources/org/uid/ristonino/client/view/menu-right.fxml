@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.client.controller.MenuRightController">
+    <center>
+        <ScrollPane styleClass="rightSide" fx:id="ordersListContainer" prefHeight="Infinity" fitToWidth="true" maxWidth="310" hbarPolicy="NEVER">
+            <VBox styleClass="rightSide" fx:id="ordersList" maxHeight="Infinity" maxWidth="270" alignment="TOP_CENTER">
+
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <VBox styleClass="rightSide" maxWidth="310" alignment="BOTTOM_CENTER">
+            <fx:include source="cart.fxml"/>
+        </VBox>
+    </bottom>
+</BorderPane>
