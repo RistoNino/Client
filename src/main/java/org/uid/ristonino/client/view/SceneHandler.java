@@ -1,6 +1,8 @@
 package org.uid.ristonino.client.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
@@ -104,26 +106,33 @@ public class SceneHandler {
         applyTheme();
     }
 
-    private <T> T loadRootFromFXML(String resourceName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
-        return fxmlLoader.load();
+    private FXMLLoader loadRootFromFXML(String resourceName) throws IOException {
+        return new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
     }
 
     public void createHomeScene() {
-        try {
-            scene.setRoot(loadRootFromFXML(VIEW_PATH + "menu-page.fxml"));
-            setResolution();
-        } catch (IOException ignored) {
-            Debug.print(ignored.toString());
-        }
+        Thread t = new Thread(() ->{
+            try {
+                FXMLLoader loader = loadRootFromFXML(VIEW_PATH + "main-page.fxml");
+                Parent root = loader.load();
+                Platform.runLater(() -> {
+                    scene.setRoot(root);
+                    setResolution();
+                });
+            } catch (IOException ignored) {
+                //Debug.print(ignored.toString());
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
     public void createLoginScene() {
         try {
             if (scene == null) {
-                scene = new Scene(loadRootFromFXML(VIEW_PATH + "login-page.fxml"));
+                scene = new Scene(loadRootFromFXML(VIEW_PATH + "login-page.fxml").load());
             } else {
-                scene.setRoot(loadRootFromFXML(VIEW_PATH + "login-page.fxml"));
+                scene.setRoot(loadRootFromFXML(VIEW_PATH + "login-page.fxml").load());
             }
 
         } catch (IOException ignored) {
