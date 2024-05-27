@@ -4,8 +4,6 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpClient;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
-import org.uid.ristonino.client.model.Debug;
-import org.uid.ristonino.client.model.types.Item;
 
 
 public class ApiHandler {
