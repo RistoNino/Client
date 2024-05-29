@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SidebarController {
     @FXML private VBox sidebar;
-    @FXML private Button home;
+
     private final List<Button> sidebarButtons = new ArrayList<>();
 
     private void changeCurrent(Button button) {

@@ -17,15 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MenuRightController {
-    @FXML
-    private VBox ordersList;
+    @FXML private VBox ordersList;
 
     private final Map<String, OrderInterface> listaOrdini = new HashMap<>();
-    private Cart cart = new Cart();
-    private UpdateCart updateCart = new UpdateCart(cart);
-
-    // Id item = "Item-id"
-    // Id custom item = "custom-id"
+    private final Cart cart = new Cart();
+    private final UpdateCart updateCart = new UpdateCart(cart);
 
     @FXML
     public void initialize() {
@@ -81,7 +77,7 @@ public class MenuRightController {
         } catch (IOException ignored) {
 
         }
-        return null;
+        return new OrderInterface(new VBox(), null);
     }
 
 }

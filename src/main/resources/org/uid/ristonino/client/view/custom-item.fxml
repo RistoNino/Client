@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.shape.Line?>
 <StackPane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.uid.ristonino.client.controller.CustomItemController"
       fx:id="customItemContainer" prefWidth="Infinity" prefHeight="Infinity">
-    <VBox fx:id="modalContainer" alignment="CENTER" prefHeight="Infinity" prefWidth="Infinity">
+    <VBox fx:id="modalContainer" spacing="20" alignment="CENTER" prefHeight="Infinity" prefWidth="Infinity">
         <HBox alignment="TOP_RIGHT" style="-fx-padding: 20px;">
             <Button fx:id="buttonCloseModal" onAction="#closeModal" alignment="TOP_RIGHT"/>
         </HBox>
@@ -26,11 +21,13 @@
 
         </VBox>
         <Separator prefWidth="Infinity"/>
-        <Button fx:id="addNote" onAction="#showNotes"/>
-        <TextField fx:id="customNotes" visible="false" maxHeight="16"/>
+        <HBox>
+            <Button fx:id="addNote" onAction="#showNotes"/>
+            <TextField fx:id="customNotes" visible="false" maxHeight="16"/>
+        </HBox>
         <HBox spacing="10" alignment="CENTER">
             <Button fx:id="removeCustomItem" onAction="#removeCItem"/>
-            <Label fx:id="customItemQuantity" text="0" />
+            <Label fx:id="customItemQuantity" visible="false"/>
             <Label fx:id="customItemPrice" text="0.00" />
             <Button fx:id="addCustomItem" onAction="#addCItem"/>
         </HBox>

@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,8 +18,6 @@ import org.uid.ristonino.client.model.events.AddOrder;
 import org.uid.ristonino.client.model.events.CreateCustomItem;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.types.Order;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +32,12 @@ public class MenuItemController {
     @FXML private Label ingredients;
     @FXML private HBox itemView;
 
-
-
     private int itemQuantity = 0;
 
-    private FontIcon addIcon = new FontIcon("mdoal-add");
-    private FontIcon removeIcon = new FontIcon("mdomz-minus");
+    private final FontIcon addIcon = new FontIcon("mdoal-add");
+    private final FontIcon removeIcon = new FontIcon("mdomz-minus");
 
-    private KeyValue keyValueCenter;
     private Timeline timelineCenter;
-    private KeyValue keyValueTop;
     private Timeline timelineTop;
 
     private FadeTransition fadeInRemove;
@@ -118,8 +111,8 @@ public class MenuItemController {
         fadeOutRemove = new FadeTransition(Duration.millis(250), remove);
         fadeOutRemove.setFromValue(1.0);
         fadeOutRemove.setToValue(0);
-        keyValueCenter = new KeyValue(add.translateYProperty(), 25);
-        keyValueTop = new KeyValue(add.translateYProperty(), 0);
+        KeyValue keyValueCenter = new KeyValue(add.translateYProperty(), 25);
+        KeyValue keyValueTop = new KeyValue(add.translateYProperty(), 0);
         // Sposta add al centro all'inizio
         KeyFrame keyFrameCenter = new KeyFrame(Duration.millis(250), keyValueCenter);
         KeyFrame keyFrameTop = new KeyFrame(Duration.millis(250), keyValueTop);
@@ -128,16 +121,4 @@ public class MenuItemController {
         timelineCenter.play();
     }
 
-    private HBox createCustomItem() {
-        HBox hBox = new HBox();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Settings.SCENE_PATH + "view/custom-item.fxml"));
-            hBox = fxmlLoader.load();
-            CustomItemController customItemController = fxmlLoader.getController();
-            //customItemController.initialize();
-        } catch (IOException ignored) {
-
-        }
-        return hBox;
-    }
 }

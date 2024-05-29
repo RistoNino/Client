@@ -19,14 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MenuController {
-    @FXML
-    private ScrollPane itemsListContainer;
-    @FXML
-    private VBox itemsList;
+    @FXML private ScrollPane itemsListContainer;
+    @FXML private VBox itemsList;
 
     private String actualCategory;
 
-    private Map<String, Node> categorie = new HashMap<>();
+    private final Map<String, Node> categorie = new HashMap<>();
 
     // Inizializzare con lista di categorie date da apihandler/model
     @FXML

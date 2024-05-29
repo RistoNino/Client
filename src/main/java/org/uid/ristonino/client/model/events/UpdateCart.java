@@ -7,7 +7,7 @@ import org.uid.ristonino.client.model.types.Cart;
 public class UpdateCart extends Event {
     public static final EventType<UpdateCart> EVENT_TYPE = new EventType<>(Event.ANY, "UPDATED_CART");
 
-    private Cart cart;
+    private final Cart cart;
 
     public UpdateCart(Cart cart) {
         super(EVENT_TYPE);

@@ -4,16 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class OrderController {
-    @FXML
-    private Label orderName;
-    @FXML
-    private Label orderPrice;
-    @FXML
-    private Label orderIngredients;
-    @FXML
-    private Label orderNotes;
-    @FXML
-    private Label orderQuantity;
+    @FXML private Label orderName;
+    @FXML private Label orderPrice;
+    @FXML private Label orderIngredients;
+    @FXML private Label orderNotes;
+    @FXML private Label orderQuantity;
 
     private int quantity = 0;
 

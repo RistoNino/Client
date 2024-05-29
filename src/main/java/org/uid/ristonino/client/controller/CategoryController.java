@@ -14,10 +14,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class CategoryController {
-    @FXML
-    Label categoryLabel;
-    @FXML
-    VBox categoryContainer;
+    @FXML Label categoryLabel;
+    @FXML VBox categoryContainer;
 
     public void initialize(String category) {
         categoryLabel.setText(category);

@@ -217,12 +217,19 @@
 }
 
 /* Checkbox Ingredienti */
-#ingredientsBox Checkbox:selected {
-    -fx-background-color: backgroundSecondaryColor;
+#ingredientsBox .check-box {
+    -fx-max-width: 300px;
 }
 
-#ingredientsBox Checkbox:selected > .box > .mark,
-#ingredientsBox Checkbox:indeterminate > .box > .mark{
+#ingredientsBox .check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: grey;
+    -fx-border-style: solid;
+    -fx-border-radius: 4px;
+}
+
+#ingredientsBox .check-box:selected .box .mark {
     -fx-background-color: activeOptionColor;
 }
 

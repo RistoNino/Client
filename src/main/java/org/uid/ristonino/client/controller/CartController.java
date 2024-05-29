@@ -6,8 +6,7 @@ import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.UpdateCart;
 
 public class CartController {
-    @FXML
-    private Label totalPrice;
+    @FXML private Label totalPrice;
 
     @FXML
     public void initialize() {

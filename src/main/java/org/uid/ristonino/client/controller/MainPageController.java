@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MainPageController {
-    @FXML
-    private StackPane containerStack;
+    @FXML private StackPane containerStack;
 
     private Node customItemModal;
 

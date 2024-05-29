@@ -8,14 +8,11 @@ public class AddOrder extends Event {
     public static final EventType<AddOrder> ORDER_ADDED = new EventType<>(Event.ANY, "ADD_ORDER_LIST");
 
     private final String itemId;
-    private Order order;
+    private final Order order;
 
     public AddOrder(String itemId, Order order) {
         super(ORDER_ADDED);
         this.itemId = itemId;
-        this.order = order;
-    }
-    public void changeOrder(Order order) {
         this.order = order;
     }
 

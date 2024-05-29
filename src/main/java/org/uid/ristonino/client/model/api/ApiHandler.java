@@ -20,7 +20,7 @@ public class ApiHandler {
                                     //.onFailure(Throwable::printStackTrace)))
                     //.onFailure(Throwable::printStackTrace);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -36,12 +36,12 @@ public class ApiHandler {
                             .compose(resp -> resp.body()
                                     .onSuccess(body -> {
                                         System.out.println("POST Response: " + body.toString());
-                                    })
-                                    .onFailure(Throwable::printStackTrace)))
-                    .onFailure(Throwable::printStackTrace);
+                                    })));
+                                    //.onFailure(Throwable::printStackTrace)))
+                    //.onFailure(Throwable::printStackTrace);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

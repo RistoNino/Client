@@ -21,26 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomItemController {
-    @FXML
-    private StackPane customItemContainer;
-    @FXML
-    private Button buttonCloseModal;
-    @FXML
-    private Label customItemName;
-    @FXML
-    private Label customItemDescription;
-    @FXML
-    private Label customItemPrice;
-    @FXML
-    private VBox ingredientsBox;
-    @FXML
-    private Button removeCustomItem;
-    @FXML
-    private Button addCustomItem;
-    @FXML
-    private Label customItemQuantity;
-    @FXML
-    private TextField customNotes;
+    @FXML private StackPane customItemContainer;
+    @FXML private Button buttonCloseModal;
+    @FXML private Label customItemName;
+    @FXML private Label customItemDescription;
+    @FXML private Label customItemPrice;
+    @FXML private VBox ingredientsBox;
+    @FXML private Button removeCustomItem;
+    @FXML private Button addCustomItem;
+    @FXML private Label customItemQuantity;
+    @FXML private Button addNote;
+    @FXML private TextField customNotes;
 
     private static int idCustomItem = 0;
 
@@ -48,8 +39,9 @@ public class CustomItemController {
 
     private final GaussianBlur blur = new GaussianBlur();
     private final FontIcon closeIcon = new FontIcon("mdal-close");
-    private FontIcon addIcon = new FontIcon("mdoal-add");
-    private FontIcon removeIcon = new FontIcon("mdomz-minus");
+    private final FontIcon addIcon = new FontIcon("mdoal-add");
+    private final FontIcon removeIcon = new FontIcon("mdomz-minus");
+    private final FontIcon editIcon = new FontIcon("mdal-edit");
 
     private AddOrder addOrder;
     private Order ordine;
@@ -66,14 +58,16 @@ public class CustomItemController {
         closeIcon.setIconSize(20);
         addIcon.setIconSize(20);
         removeIcon.setIconSize(20);
+        editIcon.setIconSize(20);
         buttonCloseModal.setGraphic(closeIcon);
         addCustomItem.setGraphic(addIcon);
         removeCustomItem.setGraphic(removeIcon);
+        addNote.setGraphic(editIcon);
         customItemContainer.setEffect(blur);
 
         customItemContainer.setOnMouseClicked(event -> {
             Node node = (Node) event.getTarget();
-            if (node != null && node.getId().equals("customItemContainer")) {
+            if (node.getId() != null && node.getId().equals("customItemContainer")) {
                 closeModal();
             }
         });
@@ -138,6 +132,7 @@ public class CustomItemController {
     private void showNotes() {
         customNotes.setVisible(!customNotes.isVisible());
         if (customNotes.isVisible()) {
+            //stackOverflow
             customNotes.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {

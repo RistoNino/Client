@@ -3,7 +3,7 @@ package org.uid.ristonino.client.model.types;
 import java.util.HashMap;
 
 public class Cart {
-    private HashMap<String, CartInterface> listaCart = new HashMap<>();
+    private final HashMap<String, CartInterface> listaCart = new HashMap<>();
 
     public void add(String id, int quantity, double price) {
         listaCart.put(id, new CartInterface(quantity, price));
