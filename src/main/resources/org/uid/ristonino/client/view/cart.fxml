@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.client.controller.CartController"
+            prefHeight="100.0" prefWidth="200.0"
+    fx:id="cart">
+    <Label text="Riepilogo"/>
+    <Label text="Totale Ordine"/>
+    <Label fx:id="totalPrice" text="0.00"/>
+</VBox>

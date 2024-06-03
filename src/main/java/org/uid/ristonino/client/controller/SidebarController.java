@@ -1,9 +1,12 @@
 package org.uid.ristonino.client.controller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
+import org.uid.ristonino.client.model.events.EventBus;
+import org.uid.ristonino.client.model.events.ScrolledCategory;
 import org.uid.ristonino.client.model.events.SelectedCategory;
 
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class SidebarController {
     @FXML private VBox sidebar;
-    @FXML private Button home;
+
     private final List<Button> sidebarButtons = new ArrayList<>();
 
     private void changeCurrent(Button button) {
@@ -21,27 +24,39 @@ public class SidebarController {
         button.getStyleClass().add("activeSidebar");
     }
 
+    // Lista categorie va inizializzato come parametro, dallo SceneHandler invoca ApiHandler, prende tutte le categorie e piatti e le tiene caricate
+
     @FXML
     private void initialize() {
-        home.getStyleClass().add("activeSidebar");
-        sidebarButtons.add(home);
+        sidebar.setAlignment(Pos.TOP_CENTER);
         for (String category : Debug.categoryList) {
             addCategory(category);
         }
+        EventBus.getInstance().addEventHandler(ScrolledCategory.EVENT_TYPE, event -> {
+            String categoria = ((ScrolledCategory) event).getCategoryName();
+            for (Button b : sidebarButtons) {
+                if (b.getText().equals(categoria)) {
+                    if (!b.getStyleClass().contains("activeSidebar")) {
+                        changeCurrent(b);
+                    }
+                    break;
+                }
+            }
+        });
     }
 
-    @FXML
-    private void vaiHome() {
-        changeCurrent(home);
-    }
 
     private void addCategory(String name) {
         Button button = new Button(name);
+        button.setMaxWidth(Double.MAX_VALUE);
         SelectedCategory category = new SelectedCategory(name);
         button.setOnAction(event -> {
             changeCurrent(button);
-            button.fireEvent(category);
+            EventBus.getInstance().fireEvent(category);
         });
+        if (sidebarButtons.isEmpty()) {
+            button.getStyleClass().add("activeSidebar");
+        }
         sidebarButtons.add(button);
         sidebar.getChildren().add(button);
 

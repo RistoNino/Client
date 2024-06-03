@@ -1,0 +1,304 @@
+/* PAGINA INIZIALE */
+
+#containerLogin {
+    -fx-background-size: cover;
+    -fx-background-repeat: none;
+    -fx-background-image: url(../Images/background-login.png);
+}
+.labelsLogin {
+    -fx-background-color: transparent;
+}
+/* Bottone aggiunta Coperti */
+#buttonAddCop {
+    -fx-padding: 32px;
+    -fx-background-color: addButtonBackground;
+}
+
+#buttonAddCop:hover {
+    -fx-background-color: addButtonBackgroundHover;
+}
+
+/* Bottone rimozione coperti */
+#buttonRemCop {
+    -fx-background-color: removeButtonBackground;
+    -fx-padding: 32px;
+}
+
+#buttonRemCop:hover {
+    -fx-background-color: removeButtonBackgroundHover;
+}
+
+/* Bottone inizio ordine */
+#startButton {
+    -fx-padding: 32px;
+    -fx-background-color: activeOptionColor;
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+}
+
+#startButton:hover {
+    -fx-background-color: activeOptionColorHover;
+}
+
+/* MAIN PAGE */
+/* SIDEBAR */
+#sidebar {
+    -fx-background-color: backgroundQuartColor;
+}
+
+/* Bottone Sidebar */
+.sidebar Button {
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+    -fx-min-width: 310px;
+    -fx-font-size: 22px;
+}
+
+/* Bottone attivo Sidebar */
+.activeSidebar {
+    /*-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 2, 2); */
+    -fx-text-fill: activeOptionColor;
+    -fx-font-weight: bold;
+    -fx-border-color: activeOptionColor;
+    -fx-border-width: 0px 2px 0px 0px;
+    -fx-border-style: solid;
+}
+
+/* LISTA MENU */
+
+/* ScrollPane menu */
+#itemsListContainer {
+    -fx-background-color: transparent;
+}
+
+#itemsListContainer .scroll-bar:vertical {
+    -fx-padding: 0px;
+}
+
+#itemsListContainer .scroll-bar:vertical .thumb {
+    -fx-background-color: activeOptionColor;
+    -fx-min-width: 8px;
+}
+
+#itemsListContainer .scroll-bar:vertical .track {
+    -fx-background-color: backgroundPrimaryColor;
+    -fx-padding: 4px;
+}
+
+#itemsListContainer .scroll-bar .increment-button,
+#itemsListContainer .scroll-bar .decrement-button {
+    -fx-min-width: 0px;
+    -fx-max-width: 0px;
+    -fx-opacity: 0;
+    -fx-padding: 0px;
+    -fx-background-insets: 0px;
+}
+
+/* Lista VBox(Categorie) */
+
+#itemsList {
+    -fx-background-color: backgroundPrimaryColor;
+    -fx-padding: 10px;
+}
+
+/* Contenitore Categoria */
+#categoryContainer {
+    -fx-border-radius: 12px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: borderColor;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-background-radius: 12px;
+    -fx-background-color: transparent;
+}
+/* Titolo Categoria */
+#categoryLabel {
+    -fx-font-size: 28px;
+    -fx-text-fill: activeOptionColor;
+    -fx-font-weight: bold;
+}
+/* Box contenitore Item */
+#itemView {
+    -fx-background-color: transparent;
+    -fx-text-fill: textColor;
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-max-height: 80px;
+}
+
+#itemView:hover {
+    -fx-background-color: backgroundQuartColor;
+}
+
+/* Quantità Item */
+#quantity {
+    -fx-padding: 20px 15px 20px 10px;
+    -fx-font-size: 24px;
+    -fx-font-style: italic;
+    -fx-text-fill: activeOptionColor;
+}
+/* Bordo a sinistra per far capire quando un Item è aggiunto */
+.addedItem {
+    -fx-border-color: activeOptionColor;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 0 4px;
+    -fx-border-radius: 8px 0 0 8px;
+}
+
+/* Titolo Item */
+#name {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Descrizione, ingredienti Item */
+#description {
+    -fx-font-size: 19px;
+    -fx-font-style: italic;
+}
+#ingredients {
+    -fx-font-size: 20px;
+}
+
+/* Prezzo Item */
+#price {
+    -fx-font-size: 22px;
+    -fx-font-style: italic;
+    -fx-font-weight: 600;
+}
+
+/* Bottone per aggiungere Item */
+#add {
+    -fx-background-color: addButtonBackground;
+    -fx-text-fill: addButtonText;
+    -fx-text-alignment: center;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-min-width: 40px;
+}
+
+#add:hover {
+    -fx-background-color: addButtonBackgroundHover;
+}
+
+/* Bottone per rimuovere Item */
+#remove {
+    -fx-background-color: removeButtonBackground;
+    -fx-text-fill: removeButtonText;
+    -fx-text-alignment: center;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-min-width: 40px;
+}
+
+#remove:hover {
+    -fx-background-color: removeButtonBackgroundHover;
+}
+
+/* MODAL */
+#customItemContainer {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 0);
+}
+
+#modalContainer {
+    -fx-background-color: backgroundQuartColor;
+    -fx-background-radius: 8px;
+    -fx-max-width: 400px;
+    -fx-max-height: 600px;
+}
+
+/* Bottone chiusura Modal */
+#buttonCloseModal {
+    -fx-padding: 12px;
+    -fx-background-color: removeButtonBackground;
+    -fx-text-fill: textColor;
+}
+
+#buttonCloseModal:hover {
+    -fx-background-color: removeButtonBackgroundHover;
+}
+
+/* Checkbox Ingredienti */
+#ingredientsBox .check-box {
+    -fx-max-width: 300px;
+}
+
+#ingredientsBox .check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: grey;
+    -fx-border-style: solid;
+    -fx-border-radius: 4px;
+}
+
+#ingredientsBox .check-box:selected .box .mark {
+    -fx-background-color: activeOptionColor;
+}
+
+/* Titolo Item */
+#customItemName {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+/* Bottoni aggiunta quantità modal */
+#removeCustomItem {
+    -fx-background-color: removeButtonBackground;
+    -fx-padding: 12px;
+}
+
+#removeCustomItem:hover {
+    -fx-background-color: removeButtonBackgroundHover;
+}
+
+#customItemQuantity {
+    -fx-font-size: 16px;
+}
+
+#addCustomItem {
+    -fx-background-color: addButtonBackground;
+    -fx-padding: 12px;
+}
+#addCustomItem:hover {
+    -fx-background-color: addButtonBackgroundHover;
+}
+
+/* Lato destro BorderPane */
+.rightSide {
+    -fx-min-width: 310px;
+}
+
+/* ScrollPane ordini */
+#ordersListContainer {
+    -fx-background-color: transparent;
+}
+
+#orderContainer {
+    -fx-min-height: 80px;
+    -fx-background-color: activeOptionColor;
+}
+
+#orderQuantity, #orderName {
+    -fx-font-size: 16px;
+    -fx-padding: 4px;
+    -fx-font-weight: bold;
+}
+
+#orderIngredients {
+    -fx-font-size: 14px;
+}
+
+#orderNotes {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+
+#orderPrice {
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+}
+
+/* Parte in fondo a destra */
+#cart {
+    -fx-background-color: backgroundSecondaryColor;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px;
+}

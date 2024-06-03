@@ -14,14 +14,96 @@
 }
 
 .sidebar Button {
-    -fx-background-color: #302c2c;
-    -fx-padding: 16px;
-    -fx-min-width: 300px;
-    -fx-max-width: 300px;
+    -fx-background-radius: 20px;
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+    -fx-min-width: 280px;
+    -fx-max-width: 280px;
+    -fx-border-radius: 20px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: white;
 }
 
 .activeSidebar {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 2, 2);
     -fx-background-color: orange;
 }
 
+#itemsList {
+    -fx-background-color: #555050;
+    -fx-padding: 10px;
+}
 
+
+#categoryContainer {
+    -fx-border-radius: 12px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: orange;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-background-radius: 12px;
+    -fx-background-color: transparent;
+}
+
+
+#itemView {
+    -fx-background-color: #433f3f;
+    -fx-text-fill: #f1eaea;
+    -fx-padding: 10px 10px 10px 10px;
+    -fx-background-radius: 15px;
+    -fx-max-height: 80px;
+}
+
+#quantity {
+    -fx-padding: 20px 15px 20px 10px;
+}
+
+.addedItem {
+    -fx-border-color: green;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 0 2px;
+    -fx-border-radius: 15px 0 0 15px;
+}
+
+#name {
+    -fx-font-size: 14px;
+}
+
+#add {
+    -fx-background-radius: 12px;
+    -fx-background-color: transparent;
+    -fx-text-fill: green;
+    -fx-text-alignment: center;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-effect: dropshadow(gaussian, rgba(8, 255, 0, 0.5), 5, 0, 1, 1);
+    -fx-border-color: green;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 12px;
+    -fx-min-width: 40px;
+}
+
+#remove {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px;
+    -fx-text-fill: red;
+    -fx-text-alignment: center;
+    -fx-padding: 12px 12px 12px 12px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.5), 5, 0, 2, 2);
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 12px;
+    -fx-min-width: 40px;
+}
+
+.rightSide {
+    -fx-min-width: 300px;
+}
+
+#cart {
+    -fx-background-color: #555050;
+    -fx-background-radius: 15px;
+    -fx-padding: 10px;
+}

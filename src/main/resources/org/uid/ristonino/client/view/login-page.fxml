@@ -3,16 +3,25 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-
 <?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.client.controller.LoginPageController">
-        <VBox styleClass="root">
-            <Label text="CIAO"/>
-            <Label text="Interfaccia Cliente"/>
-            <Button text="Premimi :3" fx:id="Pulsante" onAction="#cambiaTesto"/>
-            <Label fx:id="prova" text="Sono da cambiare - Test"/>
-            <Button text="Vai alla Home" onAction="#vaiHome"/>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.client.controller.LoginPageController"
+            fx:id="containerLogin">
+    <center>
+        <VBox alignment="CENTER" spacing="20" maxWidth="400">
+            <HBox alignment="CENTER" spacing="15">
+                <Button fx:id="buttonRemCop" disable="true" onAction="#removeCoperto"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <VBox styleClass="labelsLogin" alignment="CENTER">
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="COPERTI"/>
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="1" fx:id="numCoperti"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="buttonAddCop" onAction="#addCoperto"/>
+            </HBox>
+            <Button prefWidth="Infinity" text="Ordina" fx:id="startButton" onAction="#vaiHome"/>
         </VBox>
-
-</AnchorPane>
+    </center>
+</BorderPane>

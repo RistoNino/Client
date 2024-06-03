@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.uid.ristonino.client.controller.MenuItemController" fx:id="itemView" spacing="40" alignment="CENTER">
+    <HBox alignment="CENTER" spacing="20">
+        <ImageView fx:id="imageItem" fitHeight="64" fitWidth="64" preserveRatio="true" style="-fx-padding: 0;"/>
+    </HBox>
+    <VBox maxWidth="Infinity" spacing="10">
+        <Label fx:id="name"/>
+        <Label fx:id="description"/>
+        <Label fx:id="ingredients"/>
+    </VBox>
+    <Region HBox.hgrow="ALWAYS"/>
+    <VBox alignment="TOP_CENTER" spacing="15">
+        <Label fx:id="price"/>
+        <Label fx:id="quantity" visible="false" text="0"/>
+    </VBox>
+    <VBox fx:id="buttonContainer" alignment="CENTER_RIGHT" spacing="5">
+        <Button fx:id="add" styleClass="bigButton" onAction="#addItem"/>
+        <Button fx:id="remove" styleClass="littleButton" visible="false" onAction="#removeItem"/>
+    </VBox>
+</HBox>
+
+
+

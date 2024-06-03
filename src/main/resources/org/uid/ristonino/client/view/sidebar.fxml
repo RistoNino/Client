@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:id="sidebar" spacing="10"
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:id="sidebar" spacing="15"
       fx:controller="org.uid.ristonino.client.controller.SidebarController"
-prefWidth="300" styleClass="sidebar">
-    <Button text="Home" fx:id="home" onAction="#vaiHome"/>
-    <!-- Aggiungi altri pulsanti per le varie sezioni -->
+      prefWidth="310" styleClass="sidebar">
 </VBox>

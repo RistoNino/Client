@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.uid.ristonino.client.controller.OrderController" fx:id="orderContainer" prefHeight="80" prefWidth="Infinity">
+    <HBox>
+        <Label fx:id="orderQuantity" text="PREZZO" />
+        <Label fx:id="orderName" text="TITOLO"/>
+    </HBox>
+    <Label fx:id="orderIngredients" text="INGREDIENTI"/>
+    <Label fx:id="orderNotes" text="NOTES"/>
+    <HBox alignment="CENTER_RIGHT">
+        <Label fx:id="orderPrice" text="12x"/>
+    </HBox>
+</VBox>

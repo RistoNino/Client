@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<StackPane xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.uid.ristonino.client.controller.CustomItemController"
+      fx:id="customItemContainer" prefWidth="Infinity" prefHeight="Infinity">
+    <VBox fx:id="modalContainer" spacing="20" alignment="CENTER" prefHeight="Infinity" prefWidth="Infinity">
+        <HBox alignment="TOP_RIGHT" style="-fx-padding: 20px;">
+            <Button fx:id="buttonCloseModal" onAction="#closeModal" alignment="TOP_RIGHT"/>
+        </HBox>
+        <ImageView fx:id="customItemImage"/>
+        <Label textAlignment="CENTER" text="Titolo Piatto" fx:id="customItemName"/>
+        <Label text="Descrizione piatto" fx:id="customItemDescription" />
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.CustomItemController"
-            prefHeight="400.0" prefWidth="600.0">
+        <Label text="INGREDIENTI" textAlignment="CENTER"/>
+        <Separator prefWidth="Infinity"/>
+        <VBox fx:id="ingredientsBox" alignment="CENTER">
 
-</AnchorPane>
+        </VBox>
+        <Separator prefWidth="Infinity"/>
+        <HBox>
+            <Button fx:id="addNote" onAction="#showNotes"/>
+            <TextField fx:id="customNotes" visible="false" maxHeight="16"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="removeCustomItem" onAction="#removeCItem"/>
+            <Label fx:id="customItemQuantity" visible="false"/>
+            <Label fx:id="customItemPrice" text="0.00" />
+            <Button fx:id="addCustomItem" onAction="#addCItem"/>
+        </HBox>
+    </VBox>
+</StackPane>

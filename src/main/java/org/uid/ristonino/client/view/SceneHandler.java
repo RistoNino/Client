@@ -1,8 +1,10 @@
 package org.uid.ristonino.client.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.effect.ColorAdjust;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,8 +25,14 @@ public class SceneHandler {
     private final static double minHeight = 600;
 
     private static final SceneHandler instance = new SceneHandler();
-    // Va ricordato di essere preso da file / server
-    private String theme = "dark";
+    private String theme = "light";
+
+    private final ColorAdjust protanopia = new ColorAdjust(-0.2, -0.3, 0.1, 0.0);
+    private final ColorAdjust deuteranopia = new ColorAdjust(-0.1, -0.2, 0.1, 0.0);
+    private final ColorAdjust tritanopia = new ColorAdjust(0.2, -0.3, 0.1, 0.0);
+    private final ColorAdjust normal = new ColorAdjust(0.0, 0.0, 0.0, 0.0);
+
+    private final String daltonismo = "normal";
 
     public static SceneHandler getInstance() {
         return instance;
@@ -36,6 +44,23 @@ public class SceneHandler {
     private void applyTheme() {
         this.scene.getStylesheets().clear();
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "style.css")).toExternalForm());
+
+        switch (daltonismo) {
+            case "protanopia":
+                scene.getRoot().setEffect(protanopia);
+                break;
+            case "deuteranopia":
+                scene.getRoot().setEffect(deuteranopia);
+                break;
+            case "tritanopia":
+                scene.getRoot().setEffect(tritanopia);
+                break;
+            case null, default:
+                scene.getRoot().setEffect(normal);
+                break;
+        }
+
     }
 
     public void changeTheme(String newTheme) {
@@ -81,39 +106,39 @@ public class SceneHandler {
         applyTheme();
     }
 
-    private <T> T loadRootFromFXML(String resourceName) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
-        return fxmlLoader.load();
+    private FXMLLoader loadRootFromFXML(String resourceName) throws IOException {
+        return new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
     }
 
     public void createHomeScene() {
-        try {
-            scene.setRoot(loadRootFromFXML(VIEW_PATH + "home-page.fxml"));
-            setResolution();
-        } catch (IOException ignored) {
-            System.out.println(ignored);
-        }
+        Thread t = new Thread(() ->{
+            try {
+                FXMLLoader loader = loadRootFromFXML(VIEW_PATH + "main-page.fxml");
+                Parent root = loader.load();
+                Platform.runLater(() -> {
+                    scene.setRoot(root);
+                    setResolution();
+                });
+            } catch (IOException ignored) {
+                //Debug.print(ignored.toString());
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
     public void createLoginScene() {
         try {
             if (scene == null) {
-                scene = new Scene(loadRootFromFXML(VIEW_PATH + "login-page.fxml"));
+                scene = new Scene(loadRootFromFXML(VIEW_PATH + "login-page.fxml").load());
             } else {
-                scene.setRoot(loadRootFromFXML(VIEW_PATH + "login-page.fxml"));
+                scene.setRoot(loadRootFromFXML(VIEW_PATH + "login-page.fxml").load());
             }
 
         } catch (IOException ignored) {
         } finally {
             setResolution();
         }
-    }
-
-    public void createErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setContentText(message);
-        alert.show();
     }
 }
 
