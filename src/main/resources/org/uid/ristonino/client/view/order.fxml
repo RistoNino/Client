@@ -3,16 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.OrderController" fx:id="orderContainer" prefHeight="80" prefWidth="Infinity">
-    <HBox>
-        <Label fx:id="orderQuantity" text="PREZZO" />
-        <Label fx:id="orderName" text="TITOLO"/>
+      xmlns:fx="http://javafx.com/fxml" styleClass="ordine" fx:controller="org.uid.ristonino.client.controller.OrderController" prefHeight="120" maxHeight="140" prefWidth="Infinity">
+    <HBox fx:id="orderHeader">
+        <Label fx:id="orderQuantity" text="QUANTITA" />
+        <Label wrapText="true" fx:id="orderName" text="TITOLO"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="removeOrderButton" onAction="#removeOrder" disable="true" visible="false">
+            <graphic>
+                <FontIcon styleClass="iconOrderRemove" iconLiteral="mdal-delete"/>
+            </graphic>
+        </Button>
     </HBox>
-    <Label fx:id="orderIngredients" text="INGREDIENTI"/>
-    <Label fx:id="orderNotes" text="NOTES"/>
-    <HBox alignment="CENTER_RIGHT">
-        <Label fx:id="orderPrice" text="12x"/>
+    <HBox>
+        <VBox>
+            <VBox.margin>
+                <Insets left="10"/>
+            </VBox.margin>
+
+            <Label wrapText="true" fx:id="orderIngredients" text="INGREDIENTI"/>
+            <Label wrapText="true" fx:id="orderNotes" text="NOTES"/>
+            <HBox styleClass="statoOrder">
+                <Label text="STATO: "/>
+                <Label fx:id="orderStatus" text="DA ORDINARE"/>
+            </HBox>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="orderPrice" text="12.0"/>
     </HBox>
 </VBox>
