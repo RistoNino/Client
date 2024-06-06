@@ -3,12 +3,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.CartController"
-            prefHeight="100.0" prefWidth="200.0"
-    fx:id="cart">
-    <Label text="Riepilogo"/>
-    <Label text="Totale Ordine"/>
-    <Label fx:id="totalPrice" text="0.00"/>
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.uid.ristonino.client.controller.CartController"
+      prefHeight="240.0" prefWidth="200.0"
+      fx:id="cartContainer">
+    <Separator prefWidth="200"/>
+    <VBox spacing="5" fx:id="cart">
+        <VBox.margin>
+            <Insets top="5"/>
+        </VBox.margin>
+        <Label fx:id="cartHeader" text="Riepilogo"/>
+        <HBox>
+            <Label fx:id="totalPriceHeader" text="Totale Ordine"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="totalPrice" text="0.00"/>
+        </HBox>
+        <Button prefWidth="Infinity" fx:id="orderButton" onAction="#sendOrders" text="ORDINA" />
+        <Label wrapText="true" fx:id="cartWarningLabel" text="ATTENZIONE! Una volta inviati gli ordini, non sarà più possibile modificarli dal sistema.">
+            <graphic>
+                <FontIcon styleClass="iconWarning" iconLiteral="mdmz-warning"/>
+            </graphic>
+        </Label>
+    </VBox>
+    <VBox.margin>
+        <Insets bottom="15" right="15" left="8"/>
+    </VBox.margin>
 </VBox>

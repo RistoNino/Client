@@ -1,0 +1,119 @@
+.loginHeader {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.loginHeader > #numCoperti {
+    -fx-font-size: 16px;
+}
+
+.accessibilityHeader {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#accessibilityContainer .button {
+    -fx-font-size: 12px;
+}
+
+/* SIDEBAR */
+.button {
+    -fx-font-size: 16px;
+}
+
+/* CATEGORY */
+.categoryHeader {
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+}
+
+/* ITEM */
+#quantity {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+}
+
+/* Titolo Item */
+#name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Descrizione, ingredienti Item */
+#description {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+}
+#ingredients {
+    -fx-font-size: 15px;
+}
+
+/* Prezzo Item */
+#price {
+    -fx-font-size: 16px;
+    -fx-font-style: italic;
+    -fx-font-weight: 600;
+}
+
+/* Titolo Item */
+#customItemName {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+#customIngHeader {
+    -fx-font-size: 18px;
+}
+
+#customItemDescription {
+    -fx-font-size: 16px;
+}
+
+#ingredientsBox {
+    -fx-font-size: 16px;
+}
+
+#customItemQuantity {
+    -fx-font-size: 12px;
+}
+
+/* ORDERS */
+#orderQuantity, #orderName {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#orderIngredients {
+    -fx-font-size: 10px;
+}
+
+#orderNotes {
+    -fx-font-size: 10px;
+    -fx-font-style: italic;
+}
+
+#orderPrice {
+    -fx-font-size: 10px;
+}
+
+.statoOrder {
+    -fx-font-size: 14px;
+}
+
+#orderStatus {
+    -fx-font-weight: bold;
+}
+
+/* CART */
+#cartHeader {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+#totalPriceHeader, #totalPrice {
+    -fx-font-size: 14px;
+}
+
+#totalPrice {
+    -fx-font-weight: 600;
+}

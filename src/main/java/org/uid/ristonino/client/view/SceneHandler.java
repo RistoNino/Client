@@ -1,6 +1,7 @@
 package org.uid.ristonino.client.view;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,14 @@ import org.uid.ristonino.client.model.Settings;
 public class SceneHandler {
     private Stage stage;
     private Scene scene;
+    private Parent menuPage;
+
+    Task<Parent> loadMenuTask = new Task<Parent>() {
+        @Override
+        protected Parent call() throws Exception {
+            return loadRootFromFXML(VIEW_PATH + "main-page.fxml").load();
+        }
+    };
 
     // Path
     private final static String CSS_PATH = Settings.SCENE_PATH + "css/";
@@ -32,7 +41,8 @@ public class SceneHandler {
     private final ColorAdjust tritanopia = new ColorAdjust(0.2, -0.3, 0.1, 0.0);
     private final ColorAdjust normal = new ColorAdjust(0.0, 0.0, 0.0, 0.0);
 
-    private final String daltonismo = "normal";
+    private String daltonismo = "normal";
+    private String fontSize = "medium";
 
     public static SceneHandler getInstance() {
         return instance;
@@ -43,6 +53,7 @@ public class SceneHandler {
 
     private void applyTheme() {
         this.scene.getStylesheets().clear();
+        this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "font/" + fontSize + ".css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + theme + "/main.css")).toExternalForm());
         this.scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH + "style.css")).toExternalForm());
 
@@ -73,6 +84,30 @@ public class SceneHandler {
         } finally {
             applyTheme();
         }
+    }
+
+    public void changeFontSize(String newFontSize) {
+        if (newFontSize.equals(this.fontSize)) {
+            return;
+        }
+        this.fontSize = newFontSize;
+        applyTheme();
+    }
+
+    public void changeDaltonismo(String newDaltonismo) {
+        if (newDaltonismo.equals(this.daltonismo)) {
+            return;
+        }
+        this.daltonismo = newDaltonismo;
+        applyTheme();
+    }
+
+    public String getFont() {
+        return this.fontSize;
+    }
+
+    public String getDaltonismo() {
+        return this.daltonismo;
     }
 
     public void init(Stage stage) throws IOException {
@@ -111,20 +146,25 @@ public class SceneHandler {
     }
 
     public void createHomeScene() {
-        Thread t = new Thread(() ->{
-            try {
-                FXMLLoader loader = loadRootFromFXML(VIEW_PATH + "main-page.fxml");
-                Parent root = loader.load();
+        new Thread(loadMenuTask).start();
+        loadMenuTask.setOnSucceeded(event -> {
+            menuPage = loadMenuTask.getValue();
+        });
+    }
+
+    public void loadHomeScene() {
+        if (menuPage != null) {
+            scene.setRoot(menuPage);
+            setResolution();
+        } else {
+            loadMenuTask.setOnSucceeded(event -> {
+                menuPage = loadMenuTask.getValue();
                 Platform.runLater(() -> {
-                    scene.setRoot(root);
+                    scene.setRoot(menuPage);
                     setResolution();
                 });
-            } catch (IOException ignored) {
-                //Debug.print(ignored.toString());
-            }
-        });
-        t.setDaemon(true);
-        t.start();
+            });
+        }
     }
 
     public void createLoginScene() {
@@ -138,6 +178,7 @@ public class SceneHandler {
         } catch (IOException ignored) {
         } finally {
             setResolution();
+            createHomeScene();
         }
     }
 }

@@ -13,7 +13,12 @@ public class Cart {
         listaCart.remove(id);
     }
     public void update(String id, int quantity) {
-        listaCart.get(id).setQuantity(quantity);
+        if (quantity > 0) {
+            listaCart.get(id).setQuantity(quantity);
+        } else {
+            listaCart.remove(id);
+        }
+
     }
 
     public double getTotal() {

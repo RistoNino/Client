@@ -3,14 +3,16 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // Ringraziamo internet
 
 public class EventBus {
     private static EventBus instance;
-    private final Map<EventType<?>, EventHandler<? extends Event>> handlers;
+    private final Map<EventType<?>, List<EventHandler<? extends Event>>> handlers;
 
     private EventBus() {
         handlers = new HashMap<>();
@@ -24,14 +26,17 @@ public class EventBus {
     }
 
     public synchronized <T extends Event> void addEventHandler(EventType<T> eventType, EventHandler<? super T> handler) {
-        handlers.put(eventType, handler);
+        handlers.computeIfAbsent(eventType, k -> new ArrayList<>()).add(handler);
     }
 
     public synchronized <T extends Event> void fireEvent(T event) {
-        @SuppressWarnings("unchecked")
-        EventHandler<T> handler = (EventHandler<T>) handlers.get(event.getEventType());
-        if (handler != null) {
-            handler.handle(event);
+        List<EventHandler<? extends Event>> eventHandlers = handlers.get(event.getEventType());
+        if (eventHandlers != null) {
+            for (EventHandler<? extends Event> handler : eventHandlers) {
+                @SuppressWarnings("unchecked")
+                EventHandler<T> eventHandler = (EventHandler<T>) handler;
+                eventHandler.handle(event);
+            }
         }
     }
 }
