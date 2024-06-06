@@ -9,9 +9,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.events.AddOrder;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.RemoveModal;
@@ -23,6 +27,7 @@ import java.util.List;
 public class CustomItemController {
     @FXML private StackPane customItemContainer;
     @FXML private Button buttonCloseModal;
+    @FXML private ImageView customItemImage;
     @FXML private Label customItemName;
     @FXML private Label customItemDescription;
     @FXML private Label customItemPrice;
@@ -32,38 +37,26 @@ public class CustomItemController {
     @FXML private Label customItemQuantity;
     @FXML private Button addNote;
     @FXML private TextField customNotes;
+    @FXML private Button orderCustomItem;
 
     private static int idCustomItem = 0;
 
-    private int itemQuantity = 0;
+    private int itemQuantity = 1;
 
-    private final GaussianBlur blur = new GaussianBlur();
-    private final FontIcon closeIcon = new FontIcon("mdal-close");
-    private final FontIcon addIcon = new FontIcon("mdoal-add");
-    private final FontIcon removeIcon = new FontIcon("mdomz-minus");
-    private final FontIcon editIcon = new FontIcon("mdal-edit");
+    private boolean ordinato = false;
 
     private AddOrder addOrder;
     private Order ordine;
     private String notes = "";
     private String temp;
+    private double price;
 
     @FXML
     public void initialize(String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
         idCustomItem++;
-        ordine = new Order(itemName, 0, itemPrice, new ArrayList<>(), notes);
+        ordine = new Order(itemName, 1, itemPrice, new ArrayList<>(), notes);
         addOrder = new AddOrder("custom-" + String.valueOf(idCustomItem), ordine);
-
-        blur.setRadius(100);
-        closeIcon.setIconSize(20);
-        addIcon.setIconSize(20);
-        removeIcon.setIconSize(20);
-        editIcon.setIconSize(20);
-        buttonCloseModal.setGraphic(closeIcon);
-        addCustomItem.setGraphic(addIcon);
-        removeCustomItem.setGraphic(removeIcon);
-        addNote.setGraphic(editIcon);
-        customItemContainer.setEffect(blur);
+        price = itemPrice;
 
         customItemContainer.setOnMouseClicked(event -> {
             Node node = (Node) event.getTarget();
@@ -72,6 +65,8 @@ public class CustomItemController {
             }
         });
 
+        Image image = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
+        customItemImage.setImage(image);
         customItemName.setText(itemName);
         customItemDescription.setText(itemDescription);
         customItemPrice.setText("€"+String.format("%.2f", itemPrice));
@@ -81,7 +76,6 @@ public class CustomItemController {
             checkBox.setSelected(true);
             checkBox.setOnAction(event -> {
                 getNotSelectedIngredients();
-                EventBus.getInstance().fireEvent(addOrder);
             });
             ingredientsBox.getChildren().add(checkBox);
         }
@@ -97,9 +91,11 @@ public class CustomItemController {
     private void addCItem() {
         itemQuantity++;
         ordine.setQuantity(itemQuantity);
-        EventBus.getInstance().fireEvent(addOrder);
         customItemQuantity.setText(String.valueOf(itemQuantity) + "x");
-        customItemQuantity.setVisible(true);
+        customItemPrice.setText("€ " + String.format("%.2f", price*itemQuantity));
+        if (orderCustomItem.isDisable()) {
+            orderCustomItem.setDisable(false);
+        }
     }
 
     @FXML
@@ -107,11 +103,14 @@ public class CustomItemController {
         if (itemQuantity > 0) {
             itemQuantity--;
             ordine.setQuantity(itemQuantity);
-            EventBus.getInstance().fireEvent(addOrder);
+            customItemPrice.setText("€ " + String.format("%.2f", price*itemQuantity));
         }
 
         if (itemQuantity == 0) {
-            customItemQuantity.setVisible(false);
+            orderCustomItem.setDisable(true);
+            customItemQuantity.setText("0x");
+            customItemPrice.setText("€ " + String.format("%.2f", price));
+
         } else {
             customItemQuantity.setText(itemQuantity + "x");
         }
@@ -146,13 +145,22 @@ public class CustomItemController {
                     if (oldValue) {
                         if (!(temp.equals(customNotes.getText()))) {
                             ordine.setNotes(customNotes.getText());
-                            EventBus.getInstance().fireEvent(addOrder);
                         }
                     }
 
                 }
             });
+            addNote.setText("");
+        } else {
+            addNote.setText("Aggiungi Nota");
         }
+    }
+
+    @FXML
+    private void sendOrder() {
+        EventBus.getInstance().fireEvent(addOrder);
+        closeModal();
+
     }
 
 }
