@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.UpdateCart;
+import org.uid.ristonino.client.model.events.UpdateOrders;
 
 public class CartController {
     @FXML private Label totalPrice;
@@ -14,5 +15,9 @@ public class CartController {
             double total = ((UpdateCart) event).getTotal();
             totalPrice.setText(String.format("%.2f", total));
         });
+    }
+
+    public void sendOrders() {
+        EventBus.getInstance().fireEvent(new UpdateOrders());
     }
 }
