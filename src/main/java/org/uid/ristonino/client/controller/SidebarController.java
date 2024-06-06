@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.events.EventBus;
+import org.uid.ristonino.client.model.events.OpenAccessibilityModal;
 import org.uid.ristonino.client.model.events.ScrolledCategory;
 import org.uid.ristonino.client.model.events.SelectedCategory;
 
@@ -60,6 +62,11 @@ public class SidebarController {
         sidebarButtons.add(button);
         sidebar.getChildren().add(button);
 
+    }
+
+    @FXML
+    public void openAccessibility() {
+        EventBus.getInstance().fireEvent(new OpenAccessibilityModal());
     }
 
 }
