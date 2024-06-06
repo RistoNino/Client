@@ -14,9 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.Settings;
-import org.uid.ristonino.client.model.events.AddOrder;
-import org.uid.ristonino.client.model.events.CreateCustomItem;
-import org.uid.ristonino.client.model.events.EventBus;
+import org.uid.ristonino.client.model.events.*;
 import org.uid.ristonino.client.model.types.Order;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +32,6 @@ public class MenuItemController {
 
     private int itemQuantity = 0;
 
-    private final FontIcon addIcon = new FontIcon("mdoal-add");
-    private final FontIcon removeIcon = new FontIcon("mdomz-minus");
-
     private Timeline timelineCenter;
     private Timeline timelineTop;
 
@@ -48,6 +43,7 @@ public class MenuItemController {
     private Order ordine;
 
 
+
     @FXML
     public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem) {
         name.setText(itemName);
@@ -56,10 +52,6 @@ public class MenuItemController {
         itemPrice = priceItem;
         price.setText("€" + String.format("%.2f", itemPrice));
         itemView.setMaxHeight(60);
-        addIcon.setIconColor(Color.WHITE);
-        removeIcon.setIconColor(Color.WHITE);
-        add.setGraphic(addIcon);
-        remove.setGraphic(removeIcon);
         Image image = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
         imageItem.setImage(image);
         ordine = new Order(itemName, 0, itemPrice, new ArrayList<>(), "");
@@ -67,6 +59,9 @@ public class MenuItemController {
         doAnimation();
         itemView.setOnMouseClicked(event -> {
             EventBus.getInstance().fireEvent(new CreateCustomItem(itemName, itemDescription, itemIngredients, priceItem));
+        });
+        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> {
+            resetItem();
         });
     }
 
@@ -119,6 +114,19 @@ public class MenuItemController {
         timelineCenter = new Timeline(keyFrameCenter);
         timelineTop = new Timeline(keyFrameTop);
         timelineCenter.play();
+    }
+
+
+    private void resetItem() {
+        if (itemQuantity > 0) {
+            itemQuantity = 0;
+            ordine.setQuantity(itemQuantity);
+            timelineCenter.play();
+            itemView.getStyleClass().remove("addedItem");
+            fadeOutRemove.play();
+            quantity.setVisible(false);
+            remove.setVisible(false);
+        }
     }
 
 }
