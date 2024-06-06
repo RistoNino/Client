@@ -1,34 +1,23 @@
 package org.uid.ristonino.client.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.view.SceneHandler;
 
 public class LoginPageController {
-    @FXML Label numCoperti;
-    @FXML Button buttonRemCop;
-    @FXML Button buttonAddCop;
-    @FXML Button startButton;
+    @FXML private Label numCoperti;
+    @FXML private Button buttonRemCop;
+    @FXML private Button buttonAddCop;
+    @FXML private Button startButton;
 
     private int maxNumeroCoperti = 12;
 
     private int numeroCoperti = 1;
 
-    private FontIcon fontIconRemove = new FontIcon("mdrmz-person_remove_alt_1");
-    private FontIcon fontIconAdd = new FontIcon("mdrmz-person_add_alt_1");
-    private FontIcon people = new FontIcon("mdsmz-people");
-
     @FXML
     private void initialize() {
-        fontIconRemove.setIconSize(30);
-        fontIconAdd.setIconSize(30);
-        people.setIconSize(30);
-        buttonRemCop.setGraphic(fontIconRemove);
-        buttonAddCop.setGraphic(fontIconAdd);
-        numCoperti.setGraphic(people);
+
     }
 
     @FXML
@@ -57,6 +46,6 @@ public class LoginPageController {
         buttonAddCop.setDisable(true);
         buttonRemCop.setDisable(true);
         startButton.setDisable(true);
-        SceneHandler.getInstance().createHomeScene();
+        SceneHandler.getInstance().loadHomeScene();
     }
 }

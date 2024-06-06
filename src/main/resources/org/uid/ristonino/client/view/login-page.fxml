@@ -6,22 +6,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uid.ristonino.client.controller.LoginPageController"
             fx:id="containerLogin">
     <center>
-        <VBox alignment="CENTER" spacing="20" maxWidth="400">
-            <HBox alignment="CENTER" spacing="15">
-                <Button fx:id="buttonRemCop" disable="true" onAction="#removeCoperto"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <VBox styleClass="labelsLogin" alignment="CENTER">
-                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="COPERTI"/>
-                    <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="1" fx:id="numCoperti"/>
-                </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="buttonAddCop" onAction="#addCoperto"/>
-            </HBox>
-            <Button prefWidth="Infinity" text="Ordina" fx:id="startButton" onAction="#vaiHome"/>
+        <VBox alignment="CENTER" maxWidth="400" maxHeight="300" fx:id="containerLabelsLogin">
+            <VBox alignment="CENTER" maxWidth="360" maxHeight="280" spacing="20">
+                <HBox prefWidth="Infinity" alignment="CENTER" spacing="40">
+                    <Button fx:id="buttonRemCop" disable="true" onAction="#removeCoperto">
+                        <graphic>
+                            <FontIcon styleClass="iconLogin" iconLiteral="mdrmz-person_remove_alt_1"/>
+                        </graphic>
+                    </Button>
+                    <VBox styleClass="labelsLogin" alignment="CENTER">
+                        <Label styleClass="loginHeader" text="COPERTI"/>
+                        <Label styleClass="loginHeader" text="1" fx:id="numCoperti">
+                            <graphic>
+                                <FontIcon styleClass="iconCoperti" iconLiteral="mdsmz-people"/>
+                            </graphic>
+                        </Label>
+                    </VBox>
+                    <Button fx:id="buttonAddCop" onAction="#addCoperto">
+                        <graphic>
+                            <FontIcon styleClass="iconLogin" iconLiteral="mdrmz-person_add_alt_1" />
+                        </graphic>
+                    </Button>
+                </HBox>
+                <Button styleClass="loginHeader" prefWidth="Infinity" text="Ordina" fx:id="startButton" onAction="#vaiHome">
+                    <graphic>
+                        <FontIcon styleClass="iconLogin" iconLiteral="mdal-local_dining"/>
+                    </graphic>
+                </Button>
+            </VBox>
         </VBox>
     </center>
 </BorderPane>
