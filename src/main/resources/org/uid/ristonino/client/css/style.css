@@ -1,3 +1,8 @@
+* {
+    -fx-font-family: Inter;
+    -fx-text-fill: textColor;
+}
+
 /* PAGINA INIZIALE */
 
 #containerLogin {
@@ -5,13 +10,36 @@
     -fx-background-repeat: none;
     -fx-background-image: url(../Images/background-login.png);
 }
-.labelsLogin {
-    -fx-background-color: transparent;
+
+#containerLabelsLogin {
+    -fx-background-color: backgroundPrimaryColor;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2);
+    -fx-background-radius: 16px;
 }
+
+.labelsLogin {
+    -fx-background-color: transparent;;
+}
+
+.loginHeader {
+    -fx-text-fill: textColor;
+}
+
+.iconLogin {
+    -fx-fill: textColor;
+    -fx-font-size: 30px;
+}
+
+.iconCoperti {
+    -fx-fill: textColor;
+    -fx-font-size: 30px;
+}
+
 /* Bottone aggiunta Coperti */
 #buttonAddCop {
-    -fx-padding: 32px;
+    -fx-padding: 30px;
     -fx-background-color: addButtonBackground;
+    -fx-background-radius: 8px;
 }
 
 #buttonAddCop:hover {
@@ -21,7 +49,8 @@
 /* Bottone rimozione coperti */
 #buttonRemCop {
     -fx-background-color: removeButtonBackground;
-    -fx-padding: 32px;
+    -fx-padding: 30px;
+    -fx-background-radius: 8px;
 }
 
 #buttonRemCop:hover {
@@ -30,10 +59,10 @@
 
 /* Bottone inizio ordine */
 #startButton {
-    -fx-padding: 32px;
+    -fx-padding: 30px;
     -fx-background-color: activeOptionColor;
-    -fx-font-weight: bold;
-    -fx-font-size: 24px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: textColor;
 }
 
 #startButton:hover {
@@ -42,16 +71,24 @@
 
 /* MAIN PAGE */
 /* SIDEBAR */
-#sidebar {
-    -fx-background-color: backgroundQuartColor;
+/* Bottone Sidebar */
+#sidebarContainer {
+    -fx-background-color: backgroundPrimaryColor;
 }
 
-/* Bottone Sidebar */
 .sidebar Button {
     -fx-background-color: transparent;
     -fx-padding: 20px;
     -fx-min-width: 310px;
-    -fx-font-size: 22px;
+}
+
+.sidebar Button:hover {
+    -fx-text-fill: activeOptionColor;
+}
+
+.iconSidebar {
+    -fx-fill: textColor;
+    -fx-font-size: 20px;
 }
 
 /* Bottone attivo Sidebar */
@@ -64,29 +101,47 @@
     -fx-border-style: solid;
 }
 
+#accessibilityButton {
+    -fx-background-color: transparent;
+    -fx-border-color: textColor;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-border-style: solid;
+}
+#accessibilityButton:hover {
+    -fx-text-fill: activeOptionColor;
+    -fx-border-color: activeOptionColor;
+}
+
 /* LISTA MENU */
 
 /* ScrollPane menu */
 #itemsListContainer {
+    -fx-background-color: backgroundPrimaryColor;
+}
+
+#itemsListContainer .scroll-bar:vertical,
+#ordersListContainer .scroll-bar:vertical {
+    -fx-padding: 0px;
     -fx-background-color: transparent;
 }
 
-#itemsListContainer .scroll-bar:vertical {
-    -fx-padding: 0px;
-}
-
-#itemsListContainer .scroll-bar:vertical .thumb {
+#itemsListContainer .scroll-bar:vertical .thumb,
+#ordersListContainer .scroll-bar:vertical .thumb {
     -fx-background-color: activeOptionColor;
     -fx-min-width: 8px;
 }
 
-#itemsListContainer .scroll-bar:vertical .track {
-    -fx-background-color: backgroundPrimaryColor;
+#itemsListContainer .scroll-bar:vertical .track,
+#ordersListContainer .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
     -fx-padding: 4px;
 }
 
 #itemsListContainer .scroll-bar .increment-button,
-#itemsListContainer .scroll-bar .decrement-button {
+#itemsListContainer .scroll-bar .decrement-button,
+#ordersListContainer .scroll-bar .increment-button,
+#ordersListContainer .scroll-bar .decrement-button {
     -fx-min-width: 0px;
     -fx-max-width: 0px;
     -fx-opacity: 0;
@@ -98,72 +153,50 @@
 
 #itemsList {
     -fx-background-color: backgroundPrimaryColor;
-    -fx-padding: 10px;
+    -fx-padding: 8px;
 }
 
 /* Contenitore Categoria */
 #categoryContainer {
-    -fx-border-radius: 12px;
-    -fx-border-style: solid;
-    -fx-border-width: 2px;
-    -fx-border-color: borderColor;
     -fx-padding: 12px 12px 12px 12px;
-    -fx-background-radius: 12px;
-    -fx-background-color: transparent;
+    -fx-background-radius: 16px;
+    -fx-background-color: backgroundPrimaryColor;
 }
 /* Titolo Categoria */
 #categoryLabel {
-    -fx-font-size: 28px;
     -fx-text-fill: activeOptionColor;
-    -fx-font-weight: bold;
 }
 /* Box contenitore Item */
 #itemView {
-    -fx-background-color: transparent;
+    -fx-background-color: backgroundSecondaryColor;
+    -fx-background-radius: 16px;
     -fx-text-fill: textColor;
     -fx-padding: 10px 10px 10px 10px;
-    -fx-max-height: 80px;
+    -fx-max-height: 200px;
 }
 
 #itemView:hover {
-    -fx-background-color: backgroundQuartColor;
+    -fx-background-color: backgroundTerziaryColor;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 3, 3);
 }
 
 /* Quantità Item */
 #quantity {
     -fx-padding: 20px 15px 20px 10px;
-    -fx-font-size: 24px;
-    -fx-font-style: italic;
     -fx-text-fill: activeOptionColor;
+    -fx-min-width: 70px;
 }
+
+#price {
+    -fx-min-width: 60px;
+}
+
 /* Bordo a sinistra per far capire quando un Item è aggiunto */
 .addedItem {
     -fx-border-color: activeOptionColor;
     -fx-border-style: solid;
     -fx-border-width: 0 0 0 4px;
     -fx-border-radius: 8px 0 0 8px;
-}
-
-/* Titolo Item */
-#name {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-}
-
-/* Descrizione, ingredienti Item */
-#description {
-    -fx-font-size: 19px;
-    -fx-font-style: italic;
-}
-#ingredients {
-    -fx-font-size: 20px;
-}
-
-/* Prezzo Item */
-#price {
-    -fx-font-size: 22px;
-    -fx-font-style: italic;
-    -fx-font-weight: 600;
 }
 
 /* Bottone per aggiungere Item */
@@ -173,6 +206,7 @@
     -fx-text-alignment: center;
     -fx-padding: 12px 12px 12px 12px;
     -fx-min-width: 40px;
+    -fx-background-radius: 8px;
 }
 
 #add:hover {
@@ -186,34 +220,85 @@
     -fx-text-alignment: center;
     -fx-padding: 12px 12px 12px 12px;
     -fx-min-width: 40px;
+    -fx-background-radius: 8px;
 }
 
 #remove:hover {
     -fx-background-color: removeButtonBackgroundHover;
 }
 
+.iconItems {
+    -fx-fill: backgroundSecondaryColor;
+}
+
+/* ACCESSIBILTIY CONTAINER */
+#accessibilityModalContainer {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 1, 1);
+
+}
+#accessibilityContainer {
+    -fx-background-color: backgroundSecondaryColor;
+    -fx-background-radius: 8px;
+    -fx-max-width: 500px;
+    -fx-max-height: 280px;
+
+}
+
+#fontButtons .button, #daltonismoButtons .button {
+    -fx-max-width: 120px;
+    -fx-min-width: 30px;
+    -fx-background-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-border-style: solid;
+    -fx-border-color: textColor;
+    -fx-border-width: 1px;
+}
+
+#fontButtons .button:hover, #daltonismoButtons .button:hover {
+    -fx-background-color: textColor;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-text-fill: backgroundSecondaryColor;
+}
+
+#accessibilityContainer .activeButton {
+    -fx-text-fill: textColor;
+    -fx-background-color: activeOptionColor;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+}
+
 /* MODAL */
 #customItemContainer {
-    -fx-background-color: rgba(255, 255, 255, 0.4);
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 10, 0, 1, 1);
+
 }
 
 #modalContainer {
-    -fx-background-color: backgroundQuartColor;
+    -fx-background-color: backgroundSecondaryColor;
     -fx-background-radius: 8px;
-    -fx-max-width: 400px;
-    -fx-max-height: 600px;
+    -fx-max-width: 500px;
+    -fx-max-height: 450px;
 }
 
-/* Bottone chiusura Modal */
+/* Bottone chiusura Modal Accessibility e CustomItem */
 #buttonCloseModal {
-    -fx-padding: 12px;
+    -fx-padding: 10px;
     -fx-background-color: removeButtonBackground;
     -fx-text-fill: textColor;
+    -fx-background-radius: 8px;
 }
 
 #buttonCloseModal:hover {
     -fx-background-color: removeButtonBackgroundHover;
+}
+
+.iconClose {
+    -fx-text-fill: textColor;
+    -fx-font-size: 20px;
 }
 
 /* Checkbox Ingredienti */
@@ -224,81 +309,158 @@
 #ingredientsBox .check-box .box {
     -fx-background-color: transparent;
     -fx-border-width: 1px;
-    -fx-border-color: grey;
+    -fx-border-color: textColor;
     -fx-border-style: solid;
-    -fx-border-radius: 4px;
+    -fx-border-radius: 8px;
 }
 
 #ingredientsBox .check-box:selected .box .mark {
     -fx-background-color: activeOptionColor;
 }
 
-/* Titolo Item */
-#customItemName {
-    -fx-font-size: 26px;
-    -fx-font-weight: bold;
-}
-
 /* Bottoni aggiunta quantità modal */
 #removeCustomItem {
     -fx-background-color: removeButtonBackground;
     -fx-padding: 12px;
+    -fx-background-radius: 8px;
 }
 
 #removeCustomItem:hover {
     -fx-background-color: removeButtonBackgroundHover;
 }
 
-#customItemQuantity {
+#addNote {
+    -fx-background-color: activeOptionColor;
+    -fx-padding: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: textColor;
+}
+#addNote:hover {
+    -fx-background-color: activeOptionColorHover;
+}
+
+#customNotes {
     -fx-font-size: 16px;
+    -fx-text-fill: textColor;
+    -fx-background-radius: 4px;
+    -fx-padding: 10px;
 }
 
 #addCustomItem {
     -fx-background-color: addButtonBackground;
     -fx-padding: 12px;
+    -fx-background-radius: 8px;
 }
 #addCustomItem:hover {
     -fx-background-color: addButtonBackgroundHover;
 }
 
+#orderCustomItem {
+    -fx-background-color: backgroundTerziaryColor;
+    -fx-background-radius: 8px;
+    -fx-text-fill: textColor;
+}
+
+#orderCustomItem:hover {
+    -fx-background-color: backgroundQuartColor;
+}
+
+.iconCustoms {
+    -fx-fill: textColor;
+    -fx-font-size: 20px;
+}
+
 /* Lato destro BorderPane */
 .rightSide {
-    -fx-min-width: 310px;
+    -fx-min-width: 270px;
 }
 
 /* ScrollPane ordini */
 #ordersListContainer {
-    -fx-background-color: transparent;
-}
-
-#orderContainer {
-    -fx-min-height: 80px;
-    -fx-background-color: activeOptionColor;
-}
-
-#orderQuantity, #orderName {
-    -fx-font-size: 16px;
-    -fx-padding: 4px;
-    -fx-font-weight: bold;
-}
-
-#orderIngredients {
-    -fx-font-size: 14px;
-}
-
-#orderNotes {
-    -fx-font-size: 14px;
-    -fx-font-style: italic;
-}
-
-#orderPrice {
-    -fx-font-size: 14px;
+    -fx-background-radius: 0px 0px 8px 8px;
+    -fx-background: backgroundPrimaryColor;
+    -fx-background-color: backgroundPrimaryColor;
     -fx-padding: 8px;
 }
 
-/* Parte in fondo a destra */
-#cart {
+#menuRightContainer {
+    -fx-background: backgroundPrimaryColor;
+    -fx-background-color: backgroundPrimaryColor;
+    -fx-background-radius: 8px;
+}
+
+/* VBox */
+#ordersList {
+    -fx-background-color: backgroundPrimaryColor;
+    -fx-background-radius: 0px 0px 8px 8px;
+}
+
+.ordine {
+    -fx-text-fill: textColor;
+    -fx-min-height: 80px;
     -fx-background-color: backgroundSecondaryColor;
-    -fx-background-radius: 15px;
+    -fx-background-radius: 8px;
+}
+
+.order-status-working {
+    -fx-background-color: orderInProgress;
+}
+
+#orderQuantity, #orderName {
+    -fx-padding: 4px;
+}
+
+#orderPrice {
+    -fx-padding: 8px;
+}
+
+#removeOrderButton {
+    -fx-padding: 4px;
+    -fx-background-radius: 8px;
+    -fx-background-color: removeButtonBackground;
+}
+
+#removeOrderButton:hover {
+    -fx-background-color: removeButtonBackgroundHover;
+}
+
+.iconOrderRemove {
+    -fx-fill: textColor;
+    -fx-font-size: 20px;
+}
+
+/* Parte in fondo a destra */
+#cartContainerMenu {
+    -fx-background-color: backgroundPrimaryColor;
+}
+
+#cartContainer {
+
+}
+
+#cart {
+    -fx-background-color: backgroundTerziaryColor;
+    -fx-background-radius: 15px 15px 15px 15px;
     -fx-padding: 10px;
+    -fx-text-fill: textColor;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 3, 3);
+}
+
+#orderButton {
+    -fx-padding: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: backgroundSecondaryColor;
+}
+#orderButton:hover {
+    -fx-background-color: backgroundQuartColor;
+}
+
+#cartWarningLabel {
+    -fx-text-fill: removeButtonBackground;
+    -fx-font-size: 16px;
+}
+
+.iconWarning {
+    -fx-fill: removeButtonBackground;
+    -fx-font-size: 20px;
 }

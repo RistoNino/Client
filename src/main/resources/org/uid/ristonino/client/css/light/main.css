@@ -1,8 +1,9 @@
+
 * {
-    backgroundPrimaryColor: #ffffff;
-    backgroundSecondaryColor: #fffeee;
-    backgroundTerziaryColor: #ece5e5;
-    backgroundQuartColor: #f4f4f4;
+    backgroundPrimaryColor: #f5feff;
+    backgroundSecondaryColor: #e6f9f7;
+    backgroundTerziaryColor: #caf7f9;
+    backgroundQuartColor: #d0f8f9;
 
 
     activeOptionColor: #2196f3;
@@ -12,10 +13,41 @@
     addButtonBackground: #13bc13;
     addButtonBackgroundHover: #05c815;
     addButtonText: #fff;
-    removeButtonBackground: #ff0000;
+    removeButtonBackground: #d60808;
+    removeButtonBackgroundHover: #ff3636;
+    removeButtonText: #fff;
+
+    orderInProgress: #978adc;
+
+    borderColor: #acacac;
+    textColor: #212121;
+}
+
+
+/*
+#backup {
+    backgroundPrimaryColor: #EFEFEF;
+    backgroundSecondaryColor: #DCDCDC;
+    backgroundTerziaryColor: #BDBDBD;
+    backgroundQuartColor: #989898;
+
+
+    activeOptionColor: #2196f3;
+    activeOptionColorHover: #409fe3;
+
+ */
+
+    /* BOTTONI */
+/*
+    addButtonBackground: #13bc13;
+    addButtonBackgroundHover: #05c815;
+    addButtonText: #fff;
+    removeButtonBackground: #d60808;
     removeButtonBackgroundHover: #ff3636;
     removeButtonText: #fff;
 
     borderColor: #acacac;
     textColor: #212121;
 }
+
+*/
