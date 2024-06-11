@@ -43,7 +43,7 @@ public class CustomItemController {
 
     private int itemQuantity = 1;
 
-    private boolean ordinato = false;
+    private int id;
 
     private AddOrder addOrder;
     private Order ordine;
@@ -52,9 +52,9 @@ public class CustomItemController {
     private double price;
 
     @FXML
-    public void initialize(String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
+    public void initialize(int id, String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
         idCustomItem++;
-        ordine = new Order(itemName, 1, itemPrice, new ArrayList<>(), notes);
+        ordine = new Order(id, itemName, 1, itemPrice, new ArrayList<>(), notes);
         addOrder = new AddOrder("custom-" + String.valueOf(idCustomItem), ordine);
         price = itemPrice;
 
