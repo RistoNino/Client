@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
-    private int id;
-    private String name;
-    private String category = "";
-    private List<String> ingredients = new ArrayList<String>();
-    private String description = "";
+    private final int id;
+    private final String name;
+    private final String category;
+    private final List<String> ingredients;
+    private final String description;
     private String image = "";
-    private String type = "";
     private double price = 0.00;
+    private List<Flag> flags = new ArrayList<>();
 
     // CON TUTTO
-    public Item(int id, String name, String category, List<String> ingredients, String description, String image, String type, double price) {
+    public Item(int id, String name, String category, List<String> ingredients, String description, double price, String image, List<Flag> flags) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.ingredients = ingredients;
         this.description = description;
         this.image = image;
-        this.type = type;
         this.price = price;
+        this.flags = flags;
     }
     // SENZA TIPO
     public Item(int id, String name, String category, List<String> ingredients, String description, String image, double price) {
@@ -68,11 +68,11 @@ public class Item {
         return image;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public double getPrice() {
         return price;
+    }
+
+    public List<Flag> getFlags() {
+        return flags;
     }
 }

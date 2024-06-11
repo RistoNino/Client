@@ -3,13 +3,15 @@ package org.uid.ristonino.client.model.types;
 import java.util.List;
 
 public class Order {
-    private String itemName;
-    private double price;
+    private final int id;
+    private final String itemName;
+    private final double price;
     private String removedIngredients;
     private String notes;
     private int quantity;
 
-    public Order(String itemName, int quantity, double price, List<String> removedIngredients, String notes) {
+    public Order( int id, String itemName, int quantity, double price, List<String> removedIngredients, String notes) {
+        this.id = id;
         this.itemName = itemName;
         this.quantity = quantity;
         this.price = price;
@@ -29,6 +31,10 @@ public class Order {
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getItemName() {

@@ -20,6 +20,9 @@
     <VBox alignment="TOP_CENTER" spacing="15">
         <Label fx:id="price"/>
         <Label fx:id="quantity" visible="false" text="0"/>
+        <HBox fx:id="flagsImage" visible="false" managed="false">
+
+        </HBox>
     </VBox>
     <VBox fx:id="buttonContainer" alignment="CENTER_RIGHT" spacing="5">
         <Button fx:id="add" onAction="#addItem">

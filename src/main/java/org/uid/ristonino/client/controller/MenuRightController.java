@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Settings;
+import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.*;
 import org.uid.ristonino.client.model.types.Cart;
 import org.uid.ristonino.client.model.types.Order;
@@ -19,14 +20,14 @@ public class MenuRightController {
     private final Map<String, OrderInterface> listaOrdini = new HashMap<>();
     private final Cart cart = new Cart();
     private final UpdateCart updateCart = new UpdateCart(cart);
-    private final List<OrderInterface> listaOrder = new ArrayList<>();
+    private final List<Order> listaSendOrders = new ArrayList<>();
 
     @FXML
     public void initialize() {
         //Evento per aggiungere gli ordini alla lista a destra
         EventBus.getInstance().addEventHandler(AddOrder.ORDER_ADDED, event -> {
-            String orderItemId = ((AddOrder) event).getItemId();
-            Order order = ((AddOrder) event).getOrder();
+            String orderItemId = event.getItemId();
+            Order order = event.getOrder();
             int quant = order.getQuantity();
 
 
@@ -36,7 +37,7 @@ public class MenuRightController {
                 if (quant > 0) {
                     cart.update(orderItemId, quant);
                     EventBus.getInstance().fireEvent(updateCart);
-                    OrderController orderController = listaOrdini.get(orderItemId).getOrderController();
+                    OrderController orderController = listaOrdini.get(orderItemId).orderController();
                     orderController.setNewQuantity(quant);
                     orderController.setNewNotes(notes);
                     orderController.setNewIngredients(ingredients);
@@ -57,8 +58,8 @@ public class MenuRightController {
                     cart.add(orderItemId, quant, order.getPrice());
                     EventBus.getInstance().fireEvent(updateCart);
                     OrderInterface orderInterface = loadOrder(orderItemId, order);
-                    orderInterface.getNode().setId(String.valueOf(orderItemId));
-                    ordersList.getChildren().add(orderInterface.getNode());
+                    orderInterface.node().setId(String.valueOf(orderItemId));
+                    ordersList.getChildren().add(orderInterface.node());
                     listaOrdini.put(orderItemId, orderInterface);
                 }
             }
@@ -71,18 +72,20 @@ public class MenuRightController {
                 Map.Entry<String, OrderInterface> entry = iterator.next();
                 String key = entry.getKey();
                 OrderInterface orderInterface = listaOrdini.get(key);
-                orderInterface.getOrderController().removeButtonOfRemove();
-                orderInterface.getOrderController().setOrderStatus("IN LAVORAZIONE");
-                orderInterface.getNode().getStyleClass().add("order-status-working");
+                listaSendOrders.add(orderInterface.order());
+                orderInterface.orderController().removeButtonOfRemove();
+                orderInterface.orderController().setOrderStatus("IN LAVORAZIONE");
+                orderInterface.node().getStyleClass().add("order-status-working");
 
                 // Rimuovere l'elemento corrente
                 iterator.remove();
             }
+            ApiHandler.getInstance().sendOrder(listaSendOrders);
+            listaSendOrders.clear();
         });
 
         EventBus.getInstance().addEventHandler(RemoveOrder.EVENT_TYPE, event -> {
-            String orderId = ((RemoveOrder) event).getId();
-            OrderInterface orderInterface = listaOrdini.get(orderId);
+            String orderId = event.getId();
             for (Node node : ordersList.getChildren()) {
                 if (node.getId().equals(String.valueOf(orderId))) {
                     cart.update(orderId, 0);
@@ -102,11 +105,11 @@ public class MenuRightController {
             Node node = fxmlLoader.load();
             OrderController orderController = fxmlLoader.getController();
             orderController.initialize(orderId, order.getItemName(), order.getPrice(), order.getRemovedIngredients(), order.getNotes(), order.getQuantity());
-            return new OrderInterface(node, orderController);
+            return new OrderInterface(node, orderController, order);
         } catch (IOException ignored) {
 
         }
-        return new OrderInterface(new VBox(), null);
+        return new OrderInterface(new VBox(), null, order);
     }
 
 }

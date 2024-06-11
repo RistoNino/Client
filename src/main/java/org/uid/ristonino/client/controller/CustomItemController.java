@@ -1,20 +1,15 @@
 package org.uid.ristonino.client.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.events.AddOrder;
 import org.uid.ristonino.client.model.events.EventBus;
@@ -23,17 +18,15 @@ import org.uid.ristonino.client.model.types.Order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomItemController {
     @FXML private StackPane customItemContainer;
-    @FXML private Button buttonCloseModal;
     @FXML private ImageView customItemImage;
     @FXML private Label customItemName;
     @FXML private Label customItemDescription;
     @FXML private Label customItemPrice;
     @FXML private VBox ingredientsBox;
-    @FXML private Button removeCustomItem;
-    @FXML private Button addCustomItem;
     @FXML private Label customItemQuantity;
     @FXML private Button addNote;
     @FXML private TextField customNotes;
@@ -43,19 +36,17 @@ public class CustomItemController {
 
     private int itemQuantity = 1;
 
-    private boolean ordinato = false;
-
     private AddOrder addOrder;
     private Order ordine;
-    private String notes = "";
+    private final String notes = "";
     private String temp;
     private double price;
 
     @FXML
-    public void initialize(String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
+    public void initialize(int id, String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
         idCustomItem++;
-        ordine = new Order(itemName, 1, itemPrice, new ArrayList<>(), notes);
-        addOrder = new AddOrder("custom-" + String.valueOf(idCustomItem), ordine);
+        ordine = new Order(id, itemName, 1, itemPrice, new ArrayList<>(), notes);
+        addOrder = new AddOrder("custom-" + idCustomItem, ordine);
         price = itemPrice;
 
         customItemContainer.setOnMouseClicked(event -> {
@@ -65,7 +56,7 @@ public class CustomItemController {
             }
         });
 
-        Image image = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
+        Image image = new Image(Objects.requireNonNull(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png")).toExternalForm());
         customItemImage.setImage(image);
         customItemName.setText(itemName);
         customItemDescription.setText(itemDescription);
@@ -74,9 +65,7 @@ public class CustomItemController {
         for (String ingredient : itemIngredients) {
             CheckBox checkBox = new CheckBox(ingredient);
             checkBox.setSelected(true);
-            checkBox.setOnAction(event -> {
-                getNotSelectedIngredients();
-            });
+            checkBox.setOnAction(event -> getNotSelectedIngredients());
             ingredientsBox.getChildren().add(checkBox);
         }
 
@@ -91,7 +80,7 @@ public class CustomItemController {
     private void addCItem() {
         itemQuantity++;
         ordine.setQuantity(itemQuantity);
-        customItemQuantity.setText(String.valueOf(itemQuantity) + "x");
+        customItemQuantity.setText(itemQuantity + "x");
         customItemPrice.setText("€ " + String.format("%.2f", price*itemQuantity));
         if (orderCustomItem.isDisable()) {
             orderCustomItem.setDisable(false);
@@ -132,23 +121,20 @@ public class CustomItemController {
         customNotes.setVisible(!customNotes.isVisible());
         if (customNotes.isVisible()) {
             //stackOverflow
-            customNotes.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            customNotes.focusedProperty().addListener((observable, oldValue, newValue) -> {
 
-                    //focus in
-                    if (newValue) {
-                        temp = customNotes.getText();
-                    }
-
-                    //focus out
-                    if (oldValue) {
-                        if (!(temp.equals(customNotes.getText()))) {
-                            ordine.setNotes(customNotes.getText());
-                        }
-                    }
-
+                //focus in
+                if (newValue) {
+                    temp = customNotes.getText();
                 }
+
+                //focus out
+                if (oldValue) {
+                    if (!(temp.equals(customNotes.getText()))) {
+                        ordine.setNotes(customNotes.getText());
+                    }
+                }
+
             });
             addNote.setText("");
         } else {

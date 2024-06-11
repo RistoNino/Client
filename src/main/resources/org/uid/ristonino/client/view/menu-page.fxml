@@ -2,12 +2,15 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<ScrollPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.uid.ristonino.client.controller.MenuController"
-            fx:id="itemsListContainer" prefHeight="Infinity" fitToWidth="true" hbarPolicy="NEVER">
-    <VBox fx:id="itemsList" maxWidth="Infinity" alignment="TOP_CENTER" spacing="10">
+            fx:controller="org.uid.ristonino.client.controller.MenuController">
+    <center>
+        <ScrollPane
+                fx:id="itemsListContainer" prefHeight="Infinity" fitToWidth="true" hbarPolicy="NEVER">
+            <VBox fx:id="itemsList" maxWidth="Infinity" alignment="TOP_CENTER" spacing="10">
 
-    </VBox>
-</ScrollPane>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

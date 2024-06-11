@@ -10,14 +10,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import org.kordamp.ikonli.javafx.FontIcon;
+import org.uid.ristonino.client.model.Debug;
+import org.uid.ristonino.client.model.Image64Decoder;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.events.*;
+import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Order;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuItemController {
     @FXML private ImageView imageItem;
@@ -29,6 +31,7 @@ public class MenuItemController {
     @FXML private Label description;
     @FXML private Label ingredients;
     @FXML private HBox itemView;
+    @FXML private HBox flagsImage;
 
     private int itemQuantity = 0;
 
@@ -45,24 +48,41 @@ public class MenuItemController {
 
 
     @FXML
-    public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem) {
+    public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem, List<Flag> flags, String base64Image) {
         name.setText(itemName);
         description.setText(itemDescription);
         ingredients.setText(String.join(", ", itemIngredients));
         itemPrice = priceItem;
         price.setText("€" + String.format("%.2f", itemPrice));
         itemView.setMaxHeight(60);
-        Image image = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
-        imageItem.setImage(image);
-        ordine = new Order(itemName, 0, itemPrice, new ArrayList<>(), "");
+        Image itemImage;
+        if (Debug.IS_ACTIVE || base64Image == null || base64Image.isEmpty()) {
+            itemImage = new Image(Objects.requireNonNull(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png")).toExternalForm());
+        } else {
+            itemImage = Image64Decoder.decodeToJavaFXImage(base64Image);
+        }
+        imageItem.setImage(itemImage);
+
+        if (!flags.isEmpty()) {
+            System.out.println("NON PASSO");
+            flagsImage.setVisible(true);
+            flagsImage.setManaged(true);
+            for (Flag flag : flags) {
+                Image image = Image64Decoder.decodeToJavaFXImage(flag.flagImage());
+                ImageView imageView = new ImageView(image);
+                imageView.setPreserveRatio(true);
+                imageView.setFitHeight(16);
+                imageView.setFitWidth(16);
+                flagsImage.getChildren().add(imageView);
+            }
+        }
+
+        ordine = new Order(itemId, itemName, 0, itemPrice, new ArrayList<>(), "");
         addOrder = new AddOrder("item-" + itemId, ordine);
         doAnimation();
-        itemView.setOnMouseClicked(event -> {
-            EventBus.getInstance().fireEvent(new CreateCustomItem(itemName, itemDescription, itemIngredients, priceItem));
-        });
-        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> {
-            resetItem();
-        });
+        itemView.setOnMouseClicked(event -> EventBus.getInstance().fireEvent(
+                new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem)));
+        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> resetItem());
     }
 
     @FXML
@@ -70,7 +90,7 @@ public class MenuItemController {
         itemQuantity++;
         ordine.setQuantity(itemQuantity);
         EventBus.getInstance().fireEvent(addOrder);
-        quantity.setText(String.valueOf(itemQuantity) + "x");
+        quantity.setText(itemQuantity + "x");
         if (itemQuantity == 1) {
             timelineTop.play();
             itemView.getStyleClass().add("addedItem");

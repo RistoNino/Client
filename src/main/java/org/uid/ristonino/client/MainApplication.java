@@ -20,6 +20,7 @@ public class MainApplication extends Application {
 
     @Override
     public void stop() {
+        ApiHandler.getInstance().closeConnection();
         System.exit(0);
     }
 
