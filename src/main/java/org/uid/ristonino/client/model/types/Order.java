@@ -3,9 +3,9 @@ package org.uid.ristonino.client.model.types;
 import java.util.List;
 
 public class Order {
-    private int id;
-    private String itemName;
-    private double price;
+    private final int id;
+    private final String itemName;
+    private final double price;
     private String removedIngredients;
     private String notes;
     private int quantity;

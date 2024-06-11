@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
-    private int id;
-    private String name;
-    private String category = "";
-    private List<String> ingredients = new ArrayList<String>();
-    private String description = "";
+    private final int id;
+    private final String name;
+    private final String category;
+    private final List<String> ingredients;
+    private final String description;
     private String image = "";
     private double price = 0.00;
-    private List<Flag> flags = new ArrayList<Flag>();
+    private List<Flag> flags = new ArrayList<>();
 
     // CON TUTTO
     public Item(int id, String name, String category, List<String> ingredients, String description, double price, String image, List<Flag> flags) {

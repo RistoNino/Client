@@ -19,11 +19,11 @@ public class MainPageController {
     @FXML
     public void initialize() {
         EventBus.getInstance().addEventHandler(CreateCustomItem.EVENT_TYPE, event -> {
-            int itemId = ((CreateCustomItem) event).getId();
-            String customName = ((CreateCustomItem) event).getName();
-            String customDesc = ((CreateCustomItem) event).getDescription();
-            List<String> customIngs = ((CreateCustomItem) event).getIngredients();
-            double customPrice = ((CreateCustomItem) event).getPrice();
+            int itemId = event.getId();
+            String customName = event.getName();
+            String customDesc = event.getDescription();
+            List<String> customIngs = event.getIngredients();
+            double customPrice = event.getPrice();
 
             if (createModal(itemId, customName, customDesc, customIngs, customPrice)) {
                 containerStack.getChildren().add(customItemModal);

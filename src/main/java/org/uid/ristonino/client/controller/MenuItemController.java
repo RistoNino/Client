@@ -10,9 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Image64Decoder;
 import org.uid.ristonino.client.model.Settings;
@@ -21,6 +19,7 @@ import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Order;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuItemController {
     @FXML private ImageView imageItem;
@@ -58,7 +57,7 @@ public class MenuItemController {
         itemView.setMaxHeight(60);
         Image itemImage;
         if (Debug.IS_ACTIVE || base64Image == null || base64Image.isEmpty()) {
-            itemImage = new Image(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png").toExternalForm());
+            itemImage = new Image(Objects.requireNonNull(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png")).toExternalForm());
         } else {
             itemImage = Image64Decoder.decodeToJavaFXImage(base64Image);
         }
@@ -69,7 +68,7 @@ public class MenuItemController {
             flagsImage.setVisible(true);
             flagsImage.setManaged(true);
             for (Flag flag : flags) {
-                Image image = Image64Decoder.decodeToJavaFXImage(flag.getFlagImage());
+                Image image = Image64Decoder.decodeToJavaFXImage(flag.flagImage());
                 ImageView imageView = new ImageView(image);
                 imageView.setPreserveRatio(true);
                 imageView.setFitHeight(16);
@@ -81,12 +80,9 @@ public class MenuItemController {
         ordine = new Order(itemId, itemName, 0, itemPrice, new ArrayList<>(), "");
         addOrder = new AddOrder("item-" + itemId, ordine);
         doAnimation();
-        itemView.setOnMouseClicked(event -> {
-            EventBus.getInstance().fireEvent(new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem));
-        });
-        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> {
-            resetItem();
-        });
+        itemView.setOnMouseClicked(event -> EventBus.getInstance().fireEvent(
+                new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem)));
+        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> resetItem());
     }
 
     @FXML
@@ -94,7 +90,7 @@ public class MenuItemController {
         itemQuantity++;
         ordine.setQuantity(itemQuantity);
         EventBus.getInstance().fireEvent(addOrder);
-        quantity.setText(String.valueOf(itemQuantity) + "x");
+        quantity.setText(itemQuantity + "x");
         if (itemQuantity == 1) {
             timelineTop.play();
             itemView.getStyleClass().add("addedItem");

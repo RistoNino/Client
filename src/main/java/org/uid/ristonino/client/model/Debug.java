@@ -1,11 +1,8 @@
 package org.uid.ristonino.client.model;
 
-import io.vertx.core.json.JsonObject;
-import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.types.Item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Debug {

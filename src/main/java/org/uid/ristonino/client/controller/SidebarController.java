@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.kordamp.ikonli.javafx.FontIcon;
-import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.OpenAccessibilityModal;
@@ -20,7 +18,6 @@ public class SidebarController {
     @FXML private VBox sidebar;
 
     private final List<Button> sidebarButtons = new ArrayList<>();
-    private HashMap<Integer, String> categories = new HashMap<>();
 
     private void changeCurrent(Button button) {
         for (Button b : sidebarButtons) {
@@ -33,13 +30,13 @@ public class SidebarController {
 
     @FXML
     private void initialize() {
-        categories = ApiHandler.getInstance().getCategories();
+        HashMap<Integer, String> categories = ApiHandler.getInstance().getCategories();
         sidebar.setAlignment(Pos.TOP_CENTER);
         for (String category : categories.values()) {
             addCategory(category);
         }
         EventBus.getInstance().addEventHandler(ScrolledCategory.EVENT_TYPE, event -> {
-            String categoria = ((ScrolledCategory) event).getCategoryName();
+            String categoria = event.getCategoryName();
             for (Button b : sidebarButtons) {
                 if (b.getText().equals(categoria)) {
                     if (!b.getStyleClass().contains("activeSidebar")) {

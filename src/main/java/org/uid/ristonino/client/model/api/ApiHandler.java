@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ApiHandler {
-    private int idTavolo;
+    private final int idTavolo;
     private JsonArray jsonCategories;
     private JsonArray jsonItems;
     private JsonArray jsonFlags;

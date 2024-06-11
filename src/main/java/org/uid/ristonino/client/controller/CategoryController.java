@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.types.Flag;
