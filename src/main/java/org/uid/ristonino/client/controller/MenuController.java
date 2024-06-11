@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Settings;
+import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.*;
 
 import java.io.IOException;
@@ -23,14 +24,17 @@ public class MenuController {
     @FXML private VBox itemsList;
 
     private String actualCategory;
-
+    private HashMap<Integer, String> categories = new HashMap<>();
     private final Map<String, Node> categorie = new HashMap<>();
 
     // Inizializzare con lista di categorie date da apihandler/model
     @FXML
     private void initialize() {
+        categories = ApiHandler.getInstance().getCategories();
         boolean firstCategory = true;
-        for (String category : Debug.categoryList) {
+        // TODO: Prende categorie da API
+
+        for (String category : categories.values()) {
             if (firstCategory) {
                 actualCategory = category;
                 firstCategory = false;
@@ -105,6 +109,7 @@ public class MenuController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Settings.SCENE_PATH + "view/category.fxml"));
             Node node = fxmlLoader.load();
             categorie.put(category, node);
+
             CategoryController controller = fxmlLoader.getController();
             controller.initialize(category);
             itemsList.getChildren().add(node);

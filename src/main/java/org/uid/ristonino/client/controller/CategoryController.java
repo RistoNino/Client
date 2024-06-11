@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Debug;
 import org.uid.ristonino.client.model.Settings;
+import org.uid.ristonino.client.model.api.ApiHandler;
+import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Item;
 
 import java.io.IOException;
@@ -17,20 +19,21 @@ public class CategoryController {
     @FXML private VBox categoryContainer;
 
     public void initialize(String category) {
+        List<Item> itemList = ApiHandler.getInstance().getItems();
         categoryLabel.setText(category);
-        for (Item item : Debug.items) {
+        for (Item item : itemList) {
             if (item.getCategory().equals(category)) {
-                loadItem(item.getId(), item.getName(), item.getDescription(), item.getIngredients(), item.getPrice());
+                loadItem(item.getId(), item.getName(), item.getDescription(), item.getIngredients(), item.getPrice(), item.getFlags(), item.getImage());
             }
         }
     }
 
-    private void loadItem(int id, String name, String description, List<String> ingredients, Double price) {
+    private void loadItem(int id, String name, String description, List<String> ingredients, Double price, List<Flag> flags, String base64Image) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Settings.SCENE_PATH + "view/item.fxml"));
             Node node = fxmlLoader.load();
             MenuItemController controller = fxmlLoader.getController();
-            controller.initialize(id, name, description, ingredients, price);
+            controller.initialize(id, name, description, ingredients, price, flags, base64Image);
             categoryContainer.getChildren().add(node);
         } catch (IOException ignored) {
         }

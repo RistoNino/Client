@@ -19,12 +19,13 @@ public class MainPageController {
     @FXML
     public void initialize() {
         EventBus.getInstance().addEventHandler(CreateCustomItem.EVENT_TYPE, event -> {
+            int itemId = ((CreateCustomItem) event).getId();
             String customName = ((CreateCustomItem) event).getName();
             String customDesc = ((CreateCustomItem) event).getDescription();
             List<String> customIngs = ((CreateCustomItem) event).getIngredients();
             double customPrice = ((CreateCustomItem) event).getPrice();
 
-            if (createModal(customName, customDesc, customIngs, customPrice)) {
+            if (createModal(itemId, customName, customDesc, customIngs, customPrice)) {
                 containerStack.getChildren().add(customItemModal);
                 customItemModal.setVisible(true);
             }
@@ -48,12 +49,12 @@ public class MainPageController {
         });
     }
 
-    private boolean createModal(String name, String desc, List<String> ings, double prc) {
+    private boolean createModal(int id, String name, String desc, List<String> ings, double prc) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource((Settings.SCENE_PATH + "view/custom-item.fxml")));
             customItemModal = fxmlLoader.load();
             CustomItemController customItemController = fxmlLoader.getController();
-            customItemController.initialize(name, desc, ings, prc);
+            customItemController.initialize(id, name, desc, ings, prc);
             return true;
         } catch (IOException ignored) {
 
