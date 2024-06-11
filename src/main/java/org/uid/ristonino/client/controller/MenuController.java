@@ -32,7 +32,6 @@ public class MenuController {
     private void initialize() {
         categories = ApiHandler.getInstance().getCategories();
         boolean firstCategory = true;
-        // TODO: Prende categorie da API
 
         for (String category : categories.values()) {
             if (firstCategory) {
