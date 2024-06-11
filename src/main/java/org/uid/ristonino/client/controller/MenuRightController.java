@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.Settings;
+import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.*;
 import org.uid.ristonino.client.model.types.Cart;
 import org.uid.ristonino.client.model.types.Order;
@@ -19,7 +20,7 @@ public class MenuRightController {
     private final Map<String, OrderInterface> listaOrdini = new HashMap<>();
     private final Cart cart = new Cart();
     private final UpdateCart updateCart = new UpdateCart(cart);
-    private final List<OrderInterface> listaOrder = new ArrayList<>();
+    private final List<Order> listaSendOrders = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -71,6 +72,7 @@ public class MenuRightController {
                 Map.Entry<String, OrderInterface> entry = iterator.next();
                 String key = entry.getKey();
                 OrderInterface orderInterface = listaOrdini.get(key);
+                listaSendOrders.add(orderInterface.getOrder());
                 orderInterface.getOrderController().removeButtonOfRemove();
                 orderInterface.getOrderController().setOrderStatus("IN LAVORAZIONE");
                 orderInterface.getNode().getStyleClass().add("order-status-working");
@@ -78,6 +80,8 @@ public class MenuRightController {
                 // Rimuovere l'elemento corrente
                 iterator.remove();
             }
+            ApiHandler.getInstance().sendOrder(listaSendOrders);
+            listaSendOrders.clear();
         });
 
         EventBus.getInstance().addEventHandler(RemoveOrder.EVENT_TYPE, event -> {
@@ -102,11 +106,11 @@ public class MenuRightController {
             Node node = fxmlLoader.load();
             OrderController orderController = fxmlLoader.getController();
             orderController.initialize(orderId, order.getItemName(), order.getPrice(), order.getRemovedIngredients(), order.getNotes(), order.getQuantity());
-            return new OrderInterface(node, orderController);
+            return new OrderInterface(node, orderController, order);
         } catch (IOException ignored) {
 
         }
-        return new OrderInterface(new VBox(), null);
+        return new OrderInterface(new VBox(), null, order);
     }
 
 }
