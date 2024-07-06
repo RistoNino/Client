@@ -101,11 +101,12 @@ public class MenuController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Settings.SCENE_PATH + "view/category.fxml"));
             Node node = fxmlLoader.load();
-            categorie.put(category, node);
-
             CategoryController controller = fxmlLoader.getController();
             controller.initialize(category);
-            itemsList.getChildren().add(node);
+            if (!controller.isEmpty()) {
+                categorie.put(category, node);
+                itemsList.getChildren().add(node);
+            }
         } catch (IOException ignored) {
 
         }
