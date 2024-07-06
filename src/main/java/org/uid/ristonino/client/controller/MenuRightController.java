@@ -18,8 +18,8 @@ public class MenuRightController {
     @FXML private VBox ordersList;
 
     private final Map<String, OrderInterface> listaOrdini = new HashMap<>();
-    private final Cart cart = new Cart();
-    private final UpdateCart updateCart = new UpdateCart(cart);
+    private final Cart cart = Cart.getInstance();
+    private final UpdateCart updateCart = new UpdateCart();
     private final List<Order> listaSendOrders = new ArrayList<>();
 
     @FXML
