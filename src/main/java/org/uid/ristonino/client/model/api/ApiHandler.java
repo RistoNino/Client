@@ -7,11 +7,16 @@ import io.vertx.core.http.HttpClient;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.image.Image;
+import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Item;
 import org.uid.ristonino.client.model.types.Order;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +56,7 @@ public class ApiHandler {
                             .compose(req -> req.send()
                                     .compose(resp -> resp.body()
                                             .onSuccess(body -> {
-                                                System.out.println("GET Response: " + body.toString());
+                                                //System.out.println("GET Response: " + body.toString());
                                                 getMenu();
                                             })));
                 } catch (Exception e) {
@@ -61,6 +66,27 @@ public class ApiHandler {
             }
         };
         new Thread(task).start();
+    }
+
+    public Task<InputStream> getItemImage(String itemId) {
+        Task<InputStream> task = new Task<>() {
+            @Override
+            protected InputStream call() {
+                try {
+                    client.request(HttpMethod.GET, 8080, "localhost", "/api/images/" + itemId + ".png")
+                            .compose(req -> req.send()
+                            .compose(resp -> resp.body()
+                            .onSuccess(body -> {
+                                InputStream inputStream = new ByteArrayInputStream(body.getBytes());
+                                updateValue(inputStream);
+                            })));
+                } catch (Exception ignored) {
+
+                }
+                return null;
+            };
+        };
+        return task;
     }
 
     public void getMenu() {
@@ -77,6 +103,7 @@ public class ApiHandler {
                                                 try {
                                                     jsonCategories = jsonObject.getJsonArray("categories");
                                                     jsonItems = jsonObject.getJsonArray("items");
+                                                    // System.out.println("ITEMS: " + jsonItems);
                                                     jsonFlags = jsonObject.getJsonArray("flags");
                                                 } finally {
                                                     lock.unlock();
@@ -114,7 +141,7 @@ public class ApiHandler {
         try {
             for (int i = 0; i < jsonCategories.size(); i++) {
                 JsonObject categoria = jsonCategories.getJsonObject(i);
-                retCategories.put(categoria.getInteger("key"), categoria.getString("value"));
+                retCategories.put(categoria.getInteger("idCategoria"), categoria.getString("nome"));
             }
         } finally {
             lock.unlock();
@@ -138,15 +165,26 @@ public class ApiHandler {
                 double price = jsonItem.getDouble("price");
                 //List<Integer> flagsKey = jsonItem.getJsonArray("flags").getList();
                 List<String> ingredients = jsonItem.getJsonArray("ingredients").getList();
-                String image = jsonItem.getString("base64");
+
                 String category = categories.get(categoryKey);
                 List<Flag> flagsList = new ArrayList<>();
 //                for (Integer key : flagsKey) {
 //                    flagsList.add(flags.get(key));
 //                }
 
-                Item item = new Item(id, name, category, ingredients, description, price, image, flagsList);
-                retItems.add(item);
+                Task<InputStream> task = getItemImage(String.valueOf(id));
+                task.setOnSucceeded(event -> {
+                    InputStream inputStream = task.getValue();
+                    Image image;
+                    if (inputStream != null) {
+                        image = new Image(inputStream);
+                    } else {
+                        System.out.println("Failed to retrieve image for item: " + id);
+                        image = new Image(Settings.DEFAULT_IMAGE);
+                    }
+                    Item item = new Item(id, name, category, ingredients, description, price, image, flagsList);
+                    retItems.add(item);
+                });
             }
         } finally {
             lock.unlock();
