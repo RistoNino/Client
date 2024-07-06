@@ -1,5 +1,7 @@
 package org.uid.ristonino.client.model.types;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +11,12 @@ public class Item {
     private final String category;
     private final List<String> ingredients;
     private final String description;
-    private String image = "";
+    private Image image;
     private double price = 0.00;
     private List<Flag> flags = new ArrayList<>();
 
     // CON TUTTO
-    public Item(int id, String name, String category, List<String> ingredients, String description, double price, String image, List<Flag> flags) {
+    public Item(int id, String name, String category, List<String> ingredients, String description, double price, Image image, List<Flag> flags) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -25,7 +27,7 @@ public class Item {
         this.flags = flags;
     }
     // SENZA TIPO
-    public Item(int id, String name, String category, List<String> ingredients, String description, String image, double price) {
+    public Item(int id, String name, String category, List<String> ingredients, String description, Image image, double price) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -64,7 +66,7 @@ public class Item {
         return description;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 

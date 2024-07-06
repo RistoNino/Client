@@ -12,14 +12,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.uid.ristonino.client.model.Debug;
-import org.uid.ristonino.client.model.Image64Decoder;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.events.*;
 import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Order;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MenuItemController {
     @FXML private ImageView imageItem;
@@ -44,31 +42,35 @@ public class MenuItemController {
 
     private AddOrder addOrder;
     private Order ordine;
-
+    private Image image;
 
 
     @FXML
-    public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem, List<Flag> flags, String base64Image) {
+    public void initialize(int itemId, String itemName, String itemDescription, List<String> itemIngredients, Double priceItem, List<Flag> flags, Image itemImage) {
         name.setText(itemName);
         description.setText(itemDescription);
         ingredients.setText(String.join(", ", itemIngredients));
         itemPrice = priceItem;
         price.setText("€" + String.format("%.2f", itemPrice));
         itemView.setMaxHeight(60);
-        Image itemImage;
-        if (Debug.IS_ACTIVE || base64Image == null || base64Image.isEmpty()) {
-            itemImage = new Image(Objects.requireNonNull(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png")).toExternalForm());
+        if (Debug.IS_ACTIVE || itemImage == null) {
+
+            image = new Image(Settings.DEFAULT_IMAGE);
         } else {
-            itemImage = Image64Decoder.decodeToJavaFXImage(base64Image);
+            image = itemImage;
         }
-        imageItem.setImage(itemImage);
+        imageItem.setImage(image);
 
         if (!flags.isEmpty()) {
-            System.out.println("NON PASSO");
             flagsImage.setVisible(true);
             flagsImage.setManaged(true);
             for (Flag flag : flags) {
-                Image image = Image64Decoder.decodeToJavaFXImage(flag.flagImage());
+                Image image;
+                if (flag.flagImage() != null) {
+                    image = flag.flagImage();
+                } else {
+                    image = new Image(Settings.DEFAULT_IMAGE_FLAG);
+                }
                 ImageView imageView = new ImageView(image);
                 imageView.setPreserveRatio(true);
                 imageView.setFitHeight(16);
@@ -81,7 +83,7 @@ public class MenuItemController {
         addOrder = new AddOrder("item-" + itemId, ordine);
         doAnimation();
         itemView.setOnMouseClicked(event -> EventBus.getInstance().fireEvent(
-                new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem)));
+                new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem, itemImage)));
         EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> resetItem());
     }
 
