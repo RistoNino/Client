@@ -27,12 +27,16 @@ public class CheckCategories {
         this.itemList = itemList;
     }
 
-    public Set<String> getFilledCategories() {
-        Set<String> retCategories = new HashSet<String>();
-        for (Item item : itemList) {
-            retCategories.add(item.getCategory());
-        }
+    public HashMap<Integer, String> getFilledCategories() {
+        HashMap<Integer, String> filledCategories = new HashMap<>();
+        for (Integer categoryId : categories.keySet())
+            for (Item item : itemList) {
+                String category = categories.get(categoryId);
+                if (item.getCategory().equals(category)) {
+                    filledCategories.put(categoryId, category);
+                }
+            }
 
-        return retCategories;
+        return filledCategories;
     }
 }
