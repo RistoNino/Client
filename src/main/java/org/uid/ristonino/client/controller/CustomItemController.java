@@ -41,9 +41,10 @@ public class CustomItemController {
     private final String notes = "";
     private String temp;
     private double price;
+    private Image image;
 
     @FXML
-    public void initialize(int id, String itemName, String itemDescription, List<String> itemIngredients, double itemPrice) {
+    public void initialize(int id, String itemName, String itemDescription, List<String> itemIngredients, double itemPrice, Image itemImage) {
         idCustomItem++;
         ordine = new Order(id, itemName, 1, itemPrice, new ArrayList<>(), notes);
         addOrder = new AddOrder("custom-" + idCustomItem, ordine);
@@ -55,8 +56,13 @@ public class CustomItemController {
                 closeModal();
             }
         });
+        if (itemImage == null) {
+            image = new Image(Settings.DEFAULT_IMAGE);
+        } else {
+            image = itemImage;
+        }
 
-        Image image = new Image(Objects.requireNonNull(getClass().getResource(Settings.SCENE_PATH + "images/background-login.png")).toExternalForm());
+
         customItemImage.setImage(image);
         customItemName.setText(itemName);
         customItemDescription.setText(itemDescription);

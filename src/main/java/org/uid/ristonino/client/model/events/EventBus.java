@@ -1,4 +1,5 @@
 package org.uid.ristonino.client.model.events;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-// Ringraziamo internet
 
 public class EventBus {
     private static EventBus instance;
@@ -35,8 +34,9 @@ public class EventBus {
             for (EventHandler<? extends Event> handler : eventHandlers) {
                 @SuppressWarnings("unchecked")
                 EventHandler<T> eventHandler = (EventHandler<T>) handler;
-                eventHandler.handle(event);
+                Platform.runLater(() -> eventHandler.handle(event));
             }
         }
     }
+
 }

@@ -5,6 +5,14 @@ import java.util.HashMap;
 public class Cart {
     private final HashMap<String, CartInterface> listaCart = new HashMap<>();
 
+    private static final Cart instance = new Cart();
+
+    private Cart() {}
+
+    public static Cart getInstance() {
+        return instance;
+    }
+
     public void add(String id, int quantity, double price) {
         listaCart.put(id, new CartInterface(quantity, price));
     }
