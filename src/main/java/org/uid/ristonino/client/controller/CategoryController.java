@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import org.uid.ristonino.client.model.CheckCategories;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.types.Flag;
@@ -21,7 +22,7 @@ public class CategoryController {
     boolean notEmpty = false;
 
     public void initialize(String category) {
-        List<Item> itemList = ApiHandler.getInstance().getItems();
+        List<Item> itemList = CheckCategories.instance.getItemList();
         categoryLabel.setText(category);
         for (Item item : itemList) {
             if (item.getCategory().equals(category)) {

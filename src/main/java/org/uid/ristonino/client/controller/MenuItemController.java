@@ -66,8 +66,8 @@ public class MenuItemController {
             flagsImage.setManaged(true);
             for (Flag flag : flags) {
                 Image image;
-                if (flag.flagImage() != null) {
-                    image = flag.flagImage();
+                if (flag.getFlagImage() != null) {
+                    image = flag.getFlagImage();
                 } else {
                     image = new Image(Settings.DEFAULT_IMAGE_FLAG);
                 }

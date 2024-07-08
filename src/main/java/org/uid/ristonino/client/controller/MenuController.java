@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import org.uid.ristonino.client.model.CheckCategories;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.*;
@@ -27,7 +28,7 @@ public class MenuController {
 
     @FXML
     private void initialize() {
-        categories = ApiHandler.getInstance().getCategories();
+        categories = CheckCategories.instance.getCategories();
         boolean firstCategory = true;
 
         for (String category : categories.values()) {

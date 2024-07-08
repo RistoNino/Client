@@ -1,6 +1,7 @@
 package org.uid.ristonino.client.model.api;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpClient;
@@ -20,6 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ApiHandler {
@@ -71,20 +73,29 @@ public class ApiHandler {
     public Task<InputStream> getItemImage(String itemId) {
         Task<InputStream> task = new Task<>() {
             @Override
-            protected InputStream call() {
-                try {
-                    client.request(HttpMethod.GET, 8080, "localhost", "/api/images/" + itemId + ".png")
-                            .compose(req -> req.send()
-                            .compose(resp -> resp.body()
-                            .onSuccess(body -> {
-                                InputStream inputStream = new ByteArrayInputStream(body.getBytes());
-                                updateValue(inputStream);
-                            })));
-                } catch (Exception ignored) {
+            protected InputStream call() throws Exception {
+                CompletableFuture<InputStream> future = new CompletableFuture<>();
 
-                }
-                return null;
-            };
+                client.request(HttpMethod.GET, 8080, "localhost", "/api/images/" + itemId + ".png")
+                        .compose(req -> req.send()
+                                .compose(resp -> {
+                                    if (resp.statusCode() == 200) {
+                                        return resp.body();
+                                    } else {
+                                        future.completeExceptionally(new Exception("Failed to fetch image, status code: " + resp.statusCode()));
+                                        return Future.failedFuture(new Exception("Failed to fetch image, status code: " + resp.statusCode()));
+                                    }
+                                }))
+                        .onSuccess(body -> {
+                            InputStream inputStream = new ByteArrayInputStream(body.getBytes());
+                            future.complete(inputStream);
+                        })
+                        .onFailure(err -> {
+                            future.completeExceptionally(err);
+                        });
+
+                return future.get(); // Blocking call to wait for the async result
+            }
         };
         return task;
     }
@@ -103,7 +114,6 @@ public class ApiHandler {
                                                 try {
                                                     jsonCategories = jsonObject.getJsonArray("categories");
                                                     jsonItems = jsonObject.getJsonArray("items");
-                                                    // System.out.println("ITEMS: " + jsonItems);
                                                     jsonFlags = jsonObject.getJsonArray("flags");
                                                 } finally {
                                                     lock.unlock();
@@ -126,8 +136,22 @@ public class ApiHandler {
                 JsonObject jsonFlag = jsonFlags.getJsonObject(i);
                 String name = jsonFlag.getString("name");
                 Integer id = jsonFlag.getInteger("id");
-                String image = jsonFlag.getString("base64");
-                flags.put(id, new Flag(id, name, image));
+                Flag flag = new Flag(id, name, null);
+                flags.put(id, flag);
+
+                Task<InputStream> task = getItemImage(String.valueOf(id));
+                task.setOnSucceeded(event -> {
+                    InputStream inputStream = task.getValue();
+                    Image image;
+                    if (inputStream != null) {
+                        image = new Image(inputStream);
+                    } else {
+                        System.out.println("Failed to retrieve image for flag: " + id);
+                        image = new Image(Settings.DEFAULT_IMAGE);
+                    }
+                    flag.setFlagImage(image);
+                });
+                new Thread(task).start();
             }
         } finally {
             lock.unlock();
@@ -141,7 +165,7 @@ public class ApiHandler {
         try {
             for (int i = 0; i < jsonCategories.size(); i++) {
                 JsonObject categoria = jsonCategories.getJsonObject(i);
-                retCategories.put(categoria.getInteger("idCategoria"), categoria.getString("nome"));
+                retCategories.put(categoria.getInteger("id"), categoria.getString("name"));
             }
         } finally {
             lock.unlock();
@@ -171,7 +195,8 @@ public class ApiHandler {
 //                for (Integer key : flagsKey) {
 //                    flagsList.add(flags.get(key));
 //                }
-
+                Item item = new Item(id, name, category, ingredients, description, price, null, flagsList);
+                retItems.add(item);
                 Task<InputStream> task = getItemImage(String.valueOf(id));
                 task.setOnSucceeded(event -> {
                     InputStream inputStream = task.getValue();
@@ -182,9 +207,9 @@ public class ApiHandler {
                         System.out.println("Failed to retrieve image for item: " + id);
                         image = new Image(Settings.DEFAULT_IMAGE);
                     }
-                    Item item = new Item(id, name, category, ingredients, description, price, image, flagsList);
-                    retItems.add(item);
+                    item.setImage(image);
                 });
+                new Thread(task).start();
             }
         } finally {
             lock.unlock();

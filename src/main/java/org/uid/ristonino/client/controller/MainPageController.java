@@ -3,6 +3,7 @@ package org.uid.ristonino.client.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import org.uid.ristonino.client.model.Settings;
 import org.uid.ristonino.client.model.events.*;
@@ -24,8 +25,9 @@ public class MainPageController {
             String customDesc = event.getDescription();
             List<String> customIngs = event.getIngredients();
             double customPrice = event.getPrice();
+            Image customImage = event.getImage();
 
-            if (createModal(itemId, customName, customDesc, customIngs, customPrice)) {
+            if (createModal(itemId, customName, customDesc, customIngs, customPrice, customImage)) {
                 containerStack.getChildren().add(customItemModal);
                 customItemModal.setVisible(true);
             }
@@ -49,12 +51,12 @@ public class MainPageController {
         });
     }
 
-    private boolean createModal(int id, String name, String desc, List<String> ings, double prc) {
+    private boolean createModal(int id, String name, String desc, List<String> ings, double prc, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource((Settings.SCENE_PATH + "view/custom-item.fxml")));
             customItemModal = fxmlLoader.load();
             CustomItemController customItemController = fxmlLoader.getController();
-            customItemController.initialize(id, name, desc, ings, prc);
+            customItemController.initialize(id, name, desc, ings, prc, img);
             return true;
         } catch (IOException ignored) {
 

@@ -4,15 +4,13 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import org.uid.ristonino.client.model.api.ApiHandler;
+import org.uid.ristonino.client.model.CheckCategories;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.OpenAccessibilityModal;
 import org.uid.ristonino.client.model.events.ScrolledCategory;
 import org.uid.ristonino.client.model.events.SelectedCategory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SidebarController {
     @FXML private VBox sidebar;
@@ -26,13 +24,11 @@ public class SidebarController {
         button.getStyleClass().add("activeSidebar");
     }
 
-    // Lista categorie va inizializzato come parametro, dallo SceneHandler invoca ApiHandler, prende tutte le categorie e piatti e le tiene caricate
-
     @FXML
     private void initialize() {
-        HashMap<Integer, String> categories = ApiHandler.getInstance().getCategories();
+        Set<String> categories = CheckCategories.instance.getFilledCategories();
         sidebar.setAlignment(Pos.TOP_CENTER);
-        for (String category : categories.values()) {
+        for (String category : categories) {
             addCategory(category);
         }
         EventBus.getInstance().addEventHandler(ScrolledCategory.EVENT_TYPE, event -> {
