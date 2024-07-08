@@ -77,4 +77,6 @@ public class Item {
     public List<Flag> getFlags() {
         return flags;
     }
+
+    public void setImage(Image image) {this.image = image;}
 }
