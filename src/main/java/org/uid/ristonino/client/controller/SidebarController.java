@@ -26,9 +26,9 @@ public class SidebarController {
 
     @FXML
     private void initialize() {
-        Set<String> categories = CheckCategories.instance.getFilledCategories();
+        HashMap<Integer, String> categories = CheckCategories.instance.getFilledCategories();
         sidebar.setAlignment(Pos.TOP_CENTER);
-        for (String category : categories) {
+        for (String category : categories.values()) {
             addCategory(category);
         }
         EventBus.getInstance().addEventHandler(ScrolledCategory.EVENT_TYPE, event -> {
