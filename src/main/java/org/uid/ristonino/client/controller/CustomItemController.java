@@ -33,10 +33,10 @@ public class CustomItemController {
     @FXML private Button orderCustomItem;
 
     private static int idCustomItem = 0;
+    private String customItemId;
 
     private int itemQuantity = 1;
 
-    private AddOrder addOrder;
     private Order ordine;
     private String temp;
     private double price;
@@ -46,7 +46,7 @@ public class CustomItemController {
         idCustomItem++;
         String notes = "";
         ordine = new Order(id, itemName, 1, itemPrice, new ArrayList<>(), notes);
-        addOrder = new AddOrder("custom-" + idCustomItem, ordine);
+        this.customItemId = "custom-" + idCustomItem;
         price = itemPrice;
 
         customItemContainer.setOnMouseClicked(event -> {
@@ -146,7 +146,7 @@ public class CustomItemController {
 
     @FXML
     private void sendOrder() {
-        EventBus.getInstance().fireEvent(addOrder);
+        EventBus.getInstance().fireEvent(new AddOrder(customItemId, ordine));
         closeModal();
 
     }
