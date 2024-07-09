@@ -8,7 +8,6 @@ import io.vertx.core.http.HttpClient;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import org.uid.ristonino.client.model.Settings;
@@ -33,7 +32,7 @@ public class ApiHandler {
 
     private final Vertx vertx = Vertx.vertx();
     private final HttpClient client = vertx.createHttpClient();
-    public static ApiHandler INSTANCE = new ApiHandler();
+    public static final ApiHandler INSTANCE = new ApiHandler();
 
     private final ReentrantLock lock = new ReentrantLock();
 
@@ -65,13 +64,11 @@ public class ApiHandler {
                 tableInfo.put("maxCovers", massimoCoperti);
 
                 try {
-                    client.request(HttpMethod.POST, 8080, "localhost", "/api/tables")
+                    client.request(HttpMethod.POST, Settings.SOCKET_PORT, "localhost", "/api/tables")
                             .compose(req -> req.putHeader("content-type", "application/json")
                                     .send(Buffer.buffer(tableInfo.encode()))
                                     .compose(resp -> resp.body()
-                                            .onSuccess(body -> {
-                                                System.out.println("POST Response: " + body.toString());
-                                            })));
+                                            .onSuccess(body -> System.out.println("POST Response: " + body.toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,12 +79,12 @@ public class ApiHandler {
     }
 
     public Task<InputStream> getItemImage(String itemId) {
-        Task<InputStream> task = new Task<>() {
+        return new Task<>() {
             @Override
             protected InputStream call() throws Exception {
                 CompletableFuture<InputStream> future = new CompletableFuture<>();
 
-                client.request(HttpMethod.GET, 8080, "localhost", "/api/images/" + itemId + ".png")
+                client.request(HttpMethod.GET, Settings.SOCKET_PORT, "localhost", "/api/images/" + itemId + ".png")
                         .compose(req -> req.send()
                                 .compose(resp -> {
                                     if (resp.statusCode() == 200) {
@@ -101,14 +98,11 @@ public class ApiHandler {
                             InputStream inputStream = new ByteArrayInputStream(body.getBytes());
                             future.complete(inputStream);
                         })
-                        .onFailure(err -> {
-                            future.completeExceptionally(err);
-                        });
+                        .onFailure(future::completeExceptionally);
 
                 return future.get(); // Blocking call to wait for the async result
             }
         };
-        return task;
     }
 
     public void getMenu() {
@@ -116,7 +110,7 @@ public class ApiHandler {
             @Override
             protected Void call() {
                 try {
-                    client.request(HttpMethod.GET, 8080, "localhost", "/api/menu")
+                    client.request(HttpMethod.GET, Settings.SOCKET_PORT, "localhost", "/api/menu")
                             .compose(req -> req.send()
                                     .compose(resp -> resp.body()
                                             .onSuccess(body -> {
@@ -187,7 +181,7 @@ public class ApiHandler {
 
     public List<Item> getItems() {
         List<Item> retItems = new ArrayList<>();
-        HashMap<Integer, Flag> flags = getFlags();
+        // HashMap<Integer, Flag> flags = getFlags();
         HashMap<Integer, String> categories = getCategories();
 
         lock.lock();
@@ -236,13 +230,11 @@ public class ApiHandler {
             protected Void call() {
                 JsonObject order = jsonOrder(orders);
                 try {
-                    client.request(HttpMethod.POST, 8080, "localhost", "/api/orders")
+                    client.request(HttpMethod.POST, Settings.SOCKET_PORT, "localhost", "/api/orders")
                             .compose(req -> req.putHeader("content-type", "application/json")
                                     .send(Buffer.buffer(order.encode()))
                                     .compose(resp -> resp.body()
-                                            .onSuccess(body -> {
-                                                System.out.println("POST Response: " + body.toString());
-                                            })));
+                                            .onSuccess(body -> System.out.println("POST Response: " + body.toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

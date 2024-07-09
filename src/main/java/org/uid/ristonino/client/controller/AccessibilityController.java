@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import org.kordamp.ikonli.javafx.FontIcon;
 import org.uid.ristonino.client.model.events.EventBus;
 import org.uid.ristonino.client.model.events.RemoveModal;
 import org.uid.ristonino.client.view.SceneHandler;

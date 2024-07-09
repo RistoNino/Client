@@ -4,7 +4,6 @@ module org.uid.ristonino.client {
     requires javafx.fxml;
 
     requires org.kordamp.ikonli.javafx;
-    requires org.json;
     requires io.vertx.core;
     requires io.github.cdimascio.dotenv.java;
 

@@ -10,7 +10,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.CheckCategories;
 import org.uid.ristonino.client.model.Settings;
-import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.events.*;
 
 import java.io.IOException;
@@ -21,19 +20,16 @@ public class MenuController {
     @FXML private ScrollPane itemsListContainer;
     @FXML private VBox itemsList;
 
-    private String actualCategory;
-    private HashMap<Integer, String> categories = new HashMap<>();
     private final Map<String, Node> categorie = new HashMap<>();
 
 
     @FXML
     private void initialize() {
-        categories = CheckCategories.instance.getCategories();
+        HashMap<Integer, String> categories = CheckCategories.instance.getCategories();
         boolean firstCategory = true;
 
         for (String category : categories.values()) {
             if (firstCategory) {
-                actualCategory = category;
                 firstCategory = false;
             }
             loadCategory(category);
@@ -56,7 +52,6 @@ public class MenuController {
 
                 // Imposta il valore di scorrimento dello ScrollPane
                 itemsListContainer.setVvalue(scrollPosition + 0.001);
-                actualCategory = categoria;
             }
         });
         // Listener per monitorare i cambiamenti nella scrollBar
@@ -90,7 +85,6 @@ public class MenuController {
                 // Verifica se l'elemento è visibile nel viewport
                 if (relativeTop < scrollTop + viewportHeight && relativeBottom > scrollTop) {
                     EventBus.getInstance().fireEvent(new ScrolledCategory(categoryLabel.getText()));
-                    actualCategory = categoryLabel.getText();
                     break;
                 }
             }

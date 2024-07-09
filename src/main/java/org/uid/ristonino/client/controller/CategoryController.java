@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import org.uid.ristonino.client.model.CheckCategories;
 import org.uid.ristonino.client.model.Settings;
-import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.model.types.Flag;
 import org.uid.ristonino.client.model.types.Item;
 

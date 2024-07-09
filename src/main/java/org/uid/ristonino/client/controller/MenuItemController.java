@@ -38,11 +38,9 @@ public class MenuItemController {
 
     private FadeTransition fadeInRemove;
     private FadeTransition fadeOutRemove;
-    private double itemPrice = 0.00;
 
     private AddOrder addOrder;
     private Order ordine;
-    private Image image;
 
 
     @FXML
@@ -50,16 +48,17 @@ public class MenuItemController {
         name.setText(itemName);
         description.setText(itemDescription);
         ingredients.setText(String.join(", ", itemIngredients));
-        itemPrice = priceItem;
+        double itemPrice = priceItem;
         price.setText("€" + String.format("%.2f", itemPrice));
         itemView.setMaxHeight(60);
+        Image image1;
         if (Debug.IS_ACTIVE || itemImage == null) {
 
-            image = new Image(Settings.DEFAULT_IMAGE);
+            image1 = new Image(Settings.DEFAULT_IMAGE);
         } else {
-            image = itemImage;
+            image1 = itemImage;
         }
-        imageItem.setImage(image);
+        imageItem.setImage(image1);
 
         if (!flags.isEmpty()) {
             flagsImage.setVisible(true);
@@ -85,6 +84,8 @@ public class MenuItemController {
         itemView.setOnMouseClicked(event -> EventBus.getInstance().fireEvent(
                 new CreateCustomItem(itemId, itemName, itemDescription, itemIngredients, priceItem, itemImage)));
         EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> resetItem());
+
+        EventBus.getInstance().addEventHandler(RemoveOrder.EVENT_TYPE, event -> resetItem());
     }
 
     @FXML

@@ -434,11 +434,7 @@
     -fx-background-color: backgroundPrimaryColor;
 }
 
-#cartContainer {
-
-}
-
-#cart {
+.cart {
     -fx-background-color: backgroundTerziaryColor;
     -fx-background-radius: 15px 15px 15px 15px;
     -fx-padding: 10px;

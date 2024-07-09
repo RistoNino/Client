@@ -38,14 +38,13 @@ public class CustomItemController {
 
     private AddOrder addOrder;
     private Order ordine;
-    private final String notes = "";
     private String temp;
     private double price;
-    private Image image;
 
     @FXML
     public void initialize(int id, String itemName, String itemDescription, List<String> itemIngredients, double itemPrice, Image itemImage) {
         idCustomItem++;
+        String notes = "";
         ordine = new Order(id, itemName, 1, itemPrice, new ArrayList<>(), notes);
         addOrder = new AddOrder("custom-" + idCustomItem, ordine);
         price = itemPrice;
@@ -56,11 +55,8 @@ public class CustomItemController {
                 closeModal();
             }
         });
-        if (itemImage == null) {
-            image = new Image(Settings.DEFAULT_IMAGE);
-        } else {
-            image = itemImage;
-        }
+        Image image;
+        image = Objects.requireNonNullElseGet(itemImage, () -> new Image(Settings.DEFAULT_IMAGE));
 
 
         customItemImage.setImage(image);

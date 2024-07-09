@@ -12,14 +12,9 @@ public class LoginPageController {
     @FXML private Button buttonAddCop;
     @FXML private Button startButton;
 
-    private int maxNumeroCoperti = ApiHandler.getInstance().getMassimoCoperti();
+    private final int maxNumeroCoperti = ApiHandler.getInstance().getMassimoCoperti();
 
     private int numeroCoperti = 1;
-
-    @FXML
-    private void initialize() {
-
-    }
 
     @FXML
     private void addCoperto() {
