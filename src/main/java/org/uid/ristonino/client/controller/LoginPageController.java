@@ -3,6 +3,7 @@ package org.uid.ristonino.client.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.uid.ristonino.client.model.api.ApiHandler;
 import org.uid.ristonino.client.view.SceneHandler;
 
 public class LoginPageController {
@@ -11,7 +12,7 @@ public class LoginPageController {
     @FXML private Button buttonAddCop;
     @FXML private Button startButton;
 
-    private int maxNumeroCoperti = 12;
+    private int maxNumeroCoperti = ApiHandler.getInstance().getMassimoCoperti();
 
     private int numeroCoperti = 1;
 
@@ -26,6 +27,9 @@ public class LoginPageController {
             numeroCoperti++;
             numCoperti.setText(String.valueOf(numeroCoperti));
             buttonRemCop.setDisable(false);
+            if (numeroCoperti == maxNumeroCoperti) {
+                buttonAddCop.setDisable(true);
+            }
         }
 
     }
@@ -38,6 +42,9 @@ public class LoginPageController {
             if (numeroCoperti == 1) {
                 buttonRemCop.setDisable(true);
             }
+            if (buttonAddCop.isDisable() && numeroCoperti < maxNumeroCoperti) {
+                buttonAddCop.setDisable(false);
+            }
         }
     }
 
@@ -47,5 +54,6 @@ public class LoginPageController {
         buttonRemCop.setDisable(true);
         startButton.setDisable(true);
         SceneHandler.getInstance().loadHomeScene();
+        ApiHandler.getInstance().accessApi(numeroCoperti);
     }
 }
