@@ -17,7 +17,7 @@ public class OrderController {
     @FXML private Button removeOrderButton;
     @FXML private HBox orderHeader;
 
-    private int quantity = 0;
+    private int quantity = 1;
 
     private RemoveOrder removeOrderEvent;
 

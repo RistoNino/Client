@@ -229,6 +229,7 @@ public class ApiHandler {
             @Override
             protected Void call() {
                 JsonObject order = jsonOrder(orders);
+                System.out.println(order);
                 try {
                     client.request(HttpMethod.POST, Settings.SOCKET_PORT, "localhost", "/api/orders")
                             .compose(req -> req.putHeader("content-type", "application/json")
