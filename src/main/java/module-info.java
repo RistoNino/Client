@@ -14,4 +14,5 @@ module org.uid.ristonino.client {
     exports org.uid.ristonino.client.controller;
     exports org.uid.ristonino.client.model;
     exports org.uid.ristonino.client.model.types;
+    exports org.uid.ristonino.client.model.api;
 }

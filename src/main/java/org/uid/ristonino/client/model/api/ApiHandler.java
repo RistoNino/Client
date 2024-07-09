@@ -26,6 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ApiHandler {
     private final int idTavolo;
+    private final int massimoCoperti;
     private JsonArray jsonCategories;
     private JsonArray jsonItems;
     private JsonArray jsonFlags;
@@ -42,24 +43,34 @@ public class ApiHandler {
                 .filename("config.env")
                 .load();
         idTavolo = Integer.parseInt(dotenv.get("TABLE_ID"));
-        accessApi();
+        massimoCoperti = Integer.parseInt(dotenv.get("MAX_COPERTI"));
+        getMenu();
+    }
+
+    public int getMassimoCoperti() {
+        return massimoCoperti;
     }
 
     public static ApiHandler getInstance() {
         return INSTANCE;
     }
 
-    private void accessApi() {
+    public void accessApi(int numCoperti) {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() {
+                JsonObject tableInfo = new JsonObject();
+                tableInfo.put("idTable", idTavolo);
+                tableInfo.put("numberCovers", numCoperti);
+                tableInfo.put("maxCovers", massimoCoperti);
+
                 try {
-                    client.request(HttpMethod.POST, 8080, "localhost", "/api/access")
-                            .compose(req -> req.send()
+                    client.request(HttpMethod.POST, 8080, "localhost", "/api/tables")
+                            .compose(req -> req.putHeader("content-type", "application/json")
+                                    .send(Buffer.buffer(tableInfo.encode()))
                                     .compose(resp -> resp.body()
                                             .onSuccess(body -> {
-                                                //System.out.println("GET Response: " + body.toString());
-                                                getMenu();
+                                                System.out.println("POST Response: " + body.toString());
                                             })));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -136,10 +147,11 @@ public class ApiHandler {
                 JsonObject jsonFlag = jsonFlags.getJsonObject(i);
                 String name = jsonFlag.getString("name");
                 Integer id = jsonFlag.getInteger("id");
+                String imagePath = jsonFlag.getString("pathImage");
                 Flag flag = new Flag(id, name, null);
                 flags.put(id, flag);
 
-                Task<InputStream> task = getItemImage(String.valueOf(id));
+                Task<InputStream> task = getItemImage(imagePath);
                 task.setOnSucceeded(event -> {
                     InputStream inputStream = task.getValue();
                     Image image;
@@ -187,6 +199,7 @@ public class ApiHandler {
                 Integer categoryKey = jsonItem.getInteger("category");
                 String description = jsonItem.getString("description");
                 double price = jsonItem.getDouble("price");
+                String imagePath = jsonItem.getString("pathImage");
                 //List<Integer> flagsKey = jsonItem.getJsonArray("flags").getList();
                 List<String> ingredients = jsonItem.getJsonArray("ingredients").getList();
 
@@ -197,7 +210,7 @@ public class ApiHandler {
 //                }
                 Item item = new Item(id, name, category, ingredients, description, price, null, flagsList);
                 retItems.add(item);
-                Task<InputStream> task = getItemImage(String.valueOf(id));
+                Task<InputStream> task = getItemImage(imagePath);
                 task.setOnSucceeded(event -> {
                     InputStream inputStream = task.getValue();
                     Image image;
