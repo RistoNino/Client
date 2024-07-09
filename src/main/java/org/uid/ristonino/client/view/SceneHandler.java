@@ -18,7 +18,7 @@ public class SceneHandler {
     private Scene scene;
     private Parent menuPage;
 
-    Task<Parent> loadMenuTask = new Task<Parent>() {
+    final Task<Parent> loadMenuTask = new Task<>() {
         @Override
         protected Parent call() throws Exception {
             return loadRootFromFXML(VIEW_PATH + "main-page.fxml").load();
@@ -110,7 +110,7 @@ public class SceneHandler {
         return this.daltonismo;
     }
 
-    public void init(Stage stage) throws IOException {
+    public void init(Stage stage) {
         if (this.stage == null) {
             this.stage = stage;
             if (Debug.IS_ACTIVE) {
@@ -141,15 +141,13 @@ public class SceneHandler {
         applyTheme();
     }
 
-    private FXMLLoader loadRootFromFXML(String resourceName) throws IOException {
+    private FXMLLoader loadRootFromFXML(String resourceName) {
         return new FXMLLoader(Objects.requireNonNull(getClass().getResource(resourceName)));
     }
 
     public void createHomeScene() {
         new Thread(loadMenuTask).start();
-        loadMenuTask.setOnSucceeded(event -> {
-            menuPage = loadMenuTask.getValue();
-        });
+        loadMenuTask.setOnSucceeded(event -> menuPage = loadMenuTask.getValue());
     }
 
     public void loadHomeScene() {
@@ -175,7 +173,8 @@ public class SceneHandler {
                 scene.setRoot(loadRootFromFXML(VIEW_PATH + "login-page.fxml").load());
             }
 
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             setResolution();
             createHomeScene();

@@ -10,6 +10,10 @@ Può ordinare un piatto oppure modificarne uno già esistente e chiedere qualcos
 2. JSON (Oggetti per l'invio e il ricevimento di dati tramite API)
 3. Dotenv (Lettura da file Config.env)
 
+## Configurazione app
+### Id del tavolo e numero massimo di coperti
+Viene gestito dal file config.env
+
 ## Struttura Schermata
 ### Login
 Schermata di entrata con la selezione dei numeri di persone al tavolo (coperti)

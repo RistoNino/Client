@@ -2,8 +2,7 @@ package org.uid.ristonino.client.model.types;
 
 public class CartInterface {
     private int quantity;
-    private double price;
-    private double total = 0.00;
+    private final double price;
 
     public CartInterface(int quantity, double price) {
         this.quantity = quantity;
@@ -14,7 +13,6 @@ public class CartInterface {
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        this.total = this.quantity * this.price;
     }
     public double getPrice() {
         return price;

@@ -8,13 +8,8 @@ import org.uid.ristonino.client.view.SceneHandler;
 public class MainApplication extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         SceneHandler.getInstance().init(primaryStage);
-    }
-
-    @Override
-    public void init() throws Exception {
-        super.init();
     }
 
     @Override

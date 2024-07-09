@@ -30,14 +30,15 @@ public class MenuRightController {
             Order order = event.getOrder();
             int quant = order.getQuantity();
 
-
             if (listaOrdini.containsKey(orderItemId)) {
                 String notes = order.getNotes();
                 String ingredients = order.getRemovedIngredients();
                 if (quant > 0) {
                     cart.update(orderItemId, quant);
                     EventBus.getInstance().fireEvent(updateCart);
-                    OrderController orderController = listaOrdini.get(orderItemId).orderController();
+                    OrderInterface orderInterface = listaOrdini.get(orderItemId);
+                    orderInterface.setOrder(order);
+                    OrderController orderController = orderInterface.getController();
                     orderController.setNewQuantity(quant);
                     orderController.setNewNotes(notes);
                     orderController.setNewIngredients(ingredients);
@@ -57,30 +58,32 @@ public class MenuRightController {
                 if (quant > 0) {
                     cart.add(orderItemId, quant, order.getPrice());
                     EventBus.getInstance().fireEvent(updateCart);
+                    order.setQuantity(quant);
                     OrderInterface orderInterface = loadOrder(orderItemId, order);
-                    orderInterface.node().setId(String.valueOf(orderItemId));
-                    ordersList.getChildren().add(orderInterface.node());
+                    orderInterface.getNode().setId(String.valueOf(orderItemId));
+                    orderInterface.setOrder(order);
+                    ordersList.getChildren().add(orderInterface.getNode());
                     listaOrdini.put(orderItemId, orderInterface);
                 }
             }
         });
 
         //Evento per aggiornare gli ordini fatti
-        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> {
+        EventBus.getInstance().addEventHandler(UpdateOrders.EVENT_TYPE, event -> {;
             Iterator<Map.Entry<String, OrderInterface>> iterator = listaOrdini.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, OrderInterface> entry = iterator.next();
                 String key = entry.getKey();
                 OrderInterface orderInterface = listaOrdini.get(key);
-                listaSendOrders.add(orderInterface.order());
-                orderInterface.orderController().removeButtonOfRemove();
-                orderInterface.orderController().setOrderStatus("IN LAVORAZIONE");
-                orderInterface.node().getStyleClass().add("order-status-working");
+                listaSendOrders.add(orderInterface.getOrder());
+                orderInterface.getController().removeButtonOfRemove();
+                orderInterface.getController().setOrderStatus("IN LAVORAZIONE");
+                orderInterface.getNode().getStyleClass().add("order-status-working");
 
                 // Rimuovere l'elemento corrente
                 iterator.remove();
             }
-            ApiHandler.getInstance().sendOrder(listaSendOrders);
+            ApiHandler.getInstance().sendOrder(new ArrayList<>(listaSendOrders));
             listaSendOrders.clear();
         });
 

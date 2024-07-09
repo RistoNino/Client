@@ -13,7 +13,7 @@ import org.uid.ristonino.client.model.types.Cart;
 
 public class CartController {
     @FXML private Label totalPrice;
-    private Cart cart = Cart.getInstance();
+    private final Cart cart = Cart.getInstance();
 
     @FXML
     public void initialize() {

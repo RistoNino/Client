@@ -434,16 +434,12 @@
     -fx-background-color: backgroundPrimaryColor;
 }
 
-#cartContainer {
-
-}
-
-#cart {
+.cart {
     -fx-background-color: backgroundTerziaryColor;
     -fx-background-radius: 15px 15px 15px 15px;
     -fx-padding: 10px;
     -fx-text-fill: textColor;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 3, 3);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 3, 3);
 }
 
 #orderButton {

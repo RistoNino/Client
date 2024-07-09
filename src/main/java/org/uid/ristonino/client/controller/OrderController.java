@@ -17,22 +17,15 @@ public class OrderController {
     @FXML private Button removeOrderButton;
     @FXML private HBox orderHeader;
 
-    private int quantity = 0;
-
-    private String orderId;
+    private int quantity = 1;
 
     private RemoveOrder removeOrderEvent;
 
     @FXML
     public void initialize(String id, String name, double price, String removeIngredients, String notes, int quantity) {
-        if (id.contains("custom-")) {
-            removeOrderButton.setVisible(true);
-            removeOrderButton.setDisable(false);
-            removeOrderEvent = new RemoveOrder(id);
-        } else {
-            orderHeader.getChildren().removeLast();
-        }
-        orderId = id;
+        removeOrderButton.setVisible(true);
+        removeOrderButton.setDisable(false);
+        removeOrderEvent = new RemoveOrder(id);
         orderName.setText(name);
         orderPrice.setText(String.valueOf(price));
         orderIngredients.setText(removeIngredients);
@@ -43,7 +36,7 @@ public class OrderController {
 
     public void setNewQuantity(int quantity) {
         this.quantity = quantity;
-        orderQuantity.setText(String.valueOf(quantity) + "x");
+        orderQuantity.setText(quantity + "x");
     }
     public void setNewNotes(String notes) {
         orderNotes.setText(notes);
@@ -59,9 +52,7 @@ public class OrderController {
     }
 
     public void removeButtonOfRemove() {
-        if (orderId.contains("custom-")) {
-            orderHeader.getChildren().removeLast();
-        }
+        orderHeader.getChildren().removeLast();
     }
 
     @FXML

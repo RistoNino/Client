@@ -12,7 +12,7 @@ public class Item {
     private final List<String> ingredients;
     private final String description;
     private Image image;
-    private double price = 0.00;
+    private final double price;
     private List<Flag> flags = new ArrayList<>();
 
     // CON TUTTO
